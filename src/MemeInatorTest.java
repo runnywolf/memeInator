@@ -1,4 +1,4 @@
-package src.cls;
+import main.MemeInator;
 
 public class MemeInatorTest{
   public static void main(String[] args){

@@ -1,4 +1,4 @@
-package src.cls;
+package main.page;
 
 public class StartPage{
   public StartPage(){

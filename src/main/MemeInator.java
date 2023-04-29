@@ -1,4 +1,4 @@
-package src.cls;
+package main;
 
 import javax.swing.JFrame;
 
