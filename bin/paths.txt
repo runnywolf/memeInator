@@ -1,0 +1,4 @@
+C:\Users\runnywolf\Documents\GitHub\memeInator\src\MemeInatorTest.java
+C:\Users\runnywolf\Documents\GitHub\memeInator\src\main\MemeInator.java
+C:\Users\runnywolf\Documents\GitHub\memeInator\src\main\page\StartPage.java
+C:\Users\runnywolf\Documents\GitHub\memeInator\src\main\tool\CustomFont.java
