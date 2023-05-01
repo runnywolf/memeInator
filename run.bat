@@ -1,5 +1,5 @@
 @echo off
-@mkdir bin
+if not exist bin mkdir bin
 cd bin
 javac -d . -encoding utf-8 ../src/main/page/*.java
 javac -d . -encoding utf-8 ../src/main/*.java

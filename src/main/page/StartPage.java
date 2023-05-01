@@ -1,6 +1,8 @@
 package main.page;
 
-public class StartPage{
+import javax.swing.JLayeredPane;
+
+public class StartPage extends JLayeredPane{
   public StartPage(){
     
   }
