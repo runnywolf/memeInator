@@ -17,7 +17,7 @@ public class StartPage extends Page{
 
     add(getZhtwTitle(), Integer.valueOf(0));
     add(getEnTitle(), Integer.valueOf(0));
-    add(get2button(), Integer.valueOf(0));
+    add(get2button(), Integer.valueOf(0)); // test
   }
 
   private JLabel getZhtwTitle(){
