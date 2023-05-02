@@ -3,6 +3,7 @@ package main;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+import main.page.SearchPage;
 import main.page.StartPage;
 import main.tool.NewFont;
 
@@ -18,7 +19,8 @@ public class MemeInator extends JFrame{
 
     customFont = new NewFont("../font/NotoSansTC-Bold.otf"); // import font at "memeInator/font/NotoSansTC-Bold.otf"
 
-    currentPage = new StartPage(1080, 720, customFont.getF()); // set the start page
+    //currentPage = new StartPage(1080, 720, customFont.getF()); // set the start page
+    currentPage = new SearchPage(1080, 720, customFont.getF()); // testing the search page
     add(currentPage);
   }
 
