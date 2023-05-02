@@ -13,7 +13,7 @@ public class StartPage extends Page{
   public StartPage(int w, int h, Font font){
     super(w, h, font);
     setOpaque(true);
-    setBackground(Color.BLACK);
+    setBackground(darkModeBgColor);
 
     add(getZhtwTitle(), Integer.valueOf(0));
     add(getEnTitle(), Integer.valueOf(0));
@@ -24,14 +24,14 @@ public class StartPage extends Page{
     JLabel titleZhtw = new JLabel("迷因產生器", SwingConstants.CENTER);
     titleZhtw.setFont(getF(60));
     titleZhtw.setBounds(0, 20, windowWidth, 70);
-    titleZhtw.setForeground(Color.WHITE);
+    titleZhtw.setForeground(darkModeLightColor1);
     return titleZhtw;
   }
   private JLabel getEnTitle(){
     JLabel titleEn = new JLabel("meme-inator", SwingConstants.CENTER);
     titleEn.setFont(getF(16));
     titleEn.setBounds(0, 90, windowWidth, 20);
-    titleEn.setForeground(darkModeBgColor);
+    titleEn.setForeground(darkModeLightColor1);
     return titleEn;
   }
   private JPanel get2button(){
