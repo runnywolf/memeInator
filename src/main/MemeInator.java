@@ -1,5 +1,6 @@
 package main;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
@@ -18,7 +19,7 @@ public class MemeInator extends JFrame{
 
     customFont = new NewFont("../font/NotoSansTC-Bold.otf"); // import font at "memeInator/font/NotoSansTC-Bold.otf"
 
-    currentPage = new StartPage(1080, 720, customFont.getF()); // set the start page
+    currentPage = new StartPage(customFont.getF()); // set the start page
     add(currentPage);
   }
 
