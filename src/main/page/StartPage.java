@@ -36,10 +36,12 @@ public class StartPage extends Page{
     twoButton.setBounds(buttonGap*2, 130, WINDOW_WIDTH-buttonGap*6, 500);
     twoButton.setBackground(darkModeBgColor);
     
-    JButton blankStartButton = new BetterButton("從一個空白模板開始", 32, null, null, buttonGap, null); // if param == null -> use default setting
+    BetterButton blankStartButton = new BetterButton("從一個空白模板開始", 32, null, null, buttonGap, null);
+    blankStartButton.whenHover(null, null, null);
     twoButton.add(blankStartButton);
 
-    JButton templateStartButton = new BetterButton("選擇想要的迷因模板", 32, null, null, buttonGap, null);
+    BetterButton templateStartButton = new BetterButton("選擇想要的迷因模板", 32, null, null, buttonGap, null);
+    templateStartButton.whenHover(null, null, null);
     twoButton.add(templateStartButton);
 
     return twoButton;
