@@ -1,40 +1,59 @@
 package main.page;
 
 import java.awt.Color;
+import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
 public class Page extends JLayeredPane{
   protected final String VERSION = "v0.dev-12";
   protected final int WINDOW_WIDTH = 1080;
   protected final int WINDOW_HEIGHT = 720;
+  private JPanel pane;
   private Font font;
   protected Color darkModeBgColor;
   protected Color darkModeLightColor1;
+  private int nextPageID;
 
-  protected Page(Font font){
+  protected Page(JPanel pane, Font font){
+    this.pane = pane;
     this.font = font;
     darkModeBgColor = new Color(40, 40, 40);
     darkModeLightColor1 = new Color(255, 255, 255);
+
+    setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    setOpaque(true);
+    setBackground(darkModeBgColor);
+    nextPageID = -1;
   }
 
-  protected Font getF(float fontSize){
+  protected Font getF(){ // only for Page constructor
+    return font;
+  }
+  protected Font getF(float fontSize){ // get the font, only font size
     return font.deriveFont(Font.PLAIN, fontSize);
   }
-  // get the font, only font size
-
-  protected Font getF(float fontSize, int style){
+  protected Font getF(float fontSize, int style){ // get the font, but you can choose style and size
     return font.deriveFont(style, fontSize);
   }
-  // get the font, but you can choose style and size
+
+  protected void changePage(int nextPageID){
+    this.nextPageID = nextPageID;
+  }
+  // change page to (Page)nextPage
+
+  public int getNextPage(){
+    return nextPageID;
+  }
+  // get nextPage. if nextPage != null -> need to change page.
 
   protected class BetterTextBox extends JLabel{
     public BetterTextBox(String text, float textSize, Color textColor, boolean isItalic, int horizonMode, Color bgColor){
@@ -90,6 +109,15 @@ public class Page extends JLayeredPane{
         }
       });
     }
+    public void whenClickGoto(String nextPage){
+      addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent e){
+          CardLayout cardLayout = (CardLayout) pane.getLayout();
+          cardLayout.show(pane, nextPage);
+        }
+      });
+    }
   }
   /* BetterButton():
    * 參數              | 若填null則自動設為... | 效果
@@ -105,5 +133,9 @@ public class Page extends JLayeredPane{
    * String text       | 原本的字串           | 當滑鼠移到按鈕上, 文字改變
    * Color textColor   | darkModeBgColor      | 當滑鼠移到按鈕上, 文字改變顏色
    * Color bgColor     | darkModeLightColor1  | 當滑鼠移到按鈕上, 背景改變顏色
+  */
+  /* .whenClickGoto():
+   * 參數            | 若填null則自動設為... | 效果
+   * String nextPage | 必填                 | 當按鈕被點擊時, 切換到頁面nextPage, nextPage為page class name
   */
 }

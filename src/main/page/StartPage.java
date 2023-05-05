@@ -2,21 +2,18 @@ package main.page;
 
 import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class StartPage extends Page{
-  public StartPage(Font font){
-    super(font);
-    setOpaque(true);
-    setBackground(darkModeBgColor);
+  public StartPage(JPanel pane, Font font){
+    super(pane, font);
 
     add(makeZhtwTitle(), Integer.valueOf(0));
     add(makeEnTitle(), Integer.valueOf(0));
     add(make2button(), Integer.valueOf(0));
-    add(makeVersion(), Integer.valueOf(1));
+    add(makeVersion(), Integer.valueOf(0));
   }
 
   private JLabel makeZhtwTitle(){
@@ -38,6 +35,7 @@ public class StartPage extends Page{
     
     BetterButton blankStartButton = new BetterButton("從一個空白模板開始", 32, null, null, buttonGap, null);
     blankStartButton.whenHover(null, null, null);
+    blankStartButton.whenClickGoto("EditorPage");
     twoButton.add(blankStartButton);
 
     BetterButton templateStartButton = new BetterButton("選擇想要的迷因模板", 32, null, null, buttonGap, null);
