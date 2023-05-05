@@ -8,20 +8,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class Page extends JLayeredPane{
-  protected final String VERSION = "v0.dev-12";
+  protected final String VERSION = "v0.dev-14";
   protected final int WINDOW_WIDTH = 1080;
   protected final int WINDOW_HEIGHT = 720;
   private JPanel pane;
   private Font font;
   protected Color darkModeBgColor;
   protected Color darkModeLightColor1;
-  private int nextPageID;
 
   protected Page(JPanel pane, Font font){
     this.pane = pane;
@@ -32,7 +32,6 @@ public class Page extends JLayeredPane{
     setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     setOpaque(true);
     setBackground(darkModeBgColor);
-    nextPageID = -1;
   }
 
   protected Font getF(){ // only for Page constructor
@@ -45,15 +44,11 @@ public class Page extends JLayeredPane{
     return font.deriveFont(style, fontSize);
   }
 
-  protected void changePage(int nextPageID){
-    this.nextPageID = nextPageID;
+  protected void changePage(String nextPage){
+    CardLayout cardLayout = (CardLayout) pane.getLayout();
+    cardLayout.show(pane, nextPage);
   }
   // change page to (Page)nextPage
-
-  public int getNextPage(){
-    return nextPageID;
-  }
-  // get nextPage. if nextPage != null -> need to change page.
 
   protected class BetterTextBox extends JLabel{
     public BetterTextBox(String text, float textSize, Color textColor, boolean isItalic, int horizonMode, Color bgColor){
@@ -83,12 +78,22 @@ public class Page extends JLayeredPane{
     private Color oldBgColor;
 
     public BetterButton(String text, int textSize, Color textColor, Color bgColor, int borderWidth, Color borderColor){
-      super(text);
-      setFont(getF(textSize));
-      setForeground((textColor != null)?textColor:darkModeLightColor1);
+      super((text != null)?text:"");
+
+      if (textSize > 0){
+        setFont(getF(textSize));
+        setForeground((textColor != null)?textColor:darkModeLightColor1);
+      }
+
       setBackground((bgColor != null)?bgColor:darkModeBgColor);
-      setBorder(BorderFactory.createLineBorder((borderColor != null)?borderColor:darkModeLightColor1, borderWidth));
+
+      if (borderWidth == 0) setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0), 0));
+      else setBorder(BorderFactory.createLineBorder((borderColor != null)?borderColor:darkModeLightColor1, borderWidth));
+      
       setFocusPainted(false);
+    }
+    public void setBgImage(String path){
+      setIcon(new ImageIcon(path));
     }
     public void whenHover(String text, Color textColor, Color bgColor){
       addMouseListener(new MouseAdapter(){
@@ -113,20 +118,23 @@ public class Page extends JLayeredPane{
       addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e){
-          CardLayout cardLayout = (CardLayout) pane.getLayout();
-          cardLayout.show(pane, nextPage);
+          changePage(nextPage);
         }
       });
     }
   }
   /* BetterButton():
    * 參數              | 若填null則自動設為... | 效果
-   * String text       | 必填                 | 按鈕內的文字
+   * String text       | "" (空字串)          | 按鈕內的文字
    * int textSize      | 必填                 | 文字大小
    * Color textColor   | darkModeLightColor1  | 文字顏色
    * Color bgColor     | darkModeBgColor      | 按鈕背景顏色
    * int borderWidth   | 必填                 | 邊框粗度
    * Color borderColor | darkModeLightColor1  | 邊框顏色
+  */
+  /* .setBgImage():
+   * 參數        | 若填null則自動設為... | 效果
+   * String path | 必填                 | 設定按鈕的背景圖片
   */
   /* .whenHover():
    * 參數              | 若填null則自動設為... | 效果
