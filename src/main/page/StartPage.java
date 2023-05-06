@@ -34,12 +34,12 @@ public class StartPage extends Page{
     twoButton.setBackground(darkModeBgColor);
     
     BetterButton blankStartButton = new BetterButton("從一個空白模板開始", 32, null, null, buttonGap, null);
-    blankStartButton.whenHover(null, null, null);
+    blankStartButton.whenHover(null, null, null, null);
     blankStartButton.whenClickGoto("EditorPage");
     twoButton.add(blankStartButton);
 
     BetterButton templateStartButton = new BetterButton("選擇想要的迷因模板", 32, null, null, buttonGap, null);
-    templateStartButton.whenHover(null, null, null);
+    templateStartButton.whenHover(null, null, null, null);
     twoButton.add(templateStartButton);
 
     return twoButton;

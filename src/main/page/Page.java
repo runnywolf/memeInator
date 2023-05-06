@@ -95,7 +95,9 @@ public class Page extends JLayeredPane{
     public void setBgImage(String path){
       setIcon(new ImageIcon(path));
     }
-    public void whenHover(String text, Color textColor, Color bgColor){
+    public void whenHover(String text, Color textColor, Color bgColor, String tip){
+      if (tip != null) setToolTipText(tip);
+
       addMouseListener(new MouseAdapter(){
         @Override
         public void mouseEntered(MouseEvent me){
@@ -138,9 +140,10 @@ public class Page extends JLayeredPane{
   */
   /* .whenHover():
    * 參數              | 若填null則自動設為... | 效果
-   * String text       | 原本的字串           | 當滑鼠移到按鈕上, 文字改變
+   * String text       | 原本的字串            | 當滑鼠移到按鈕上, 文字改變
    * Color textColor   | darkModeBgColor      | 當滑鼠移到按鈕上, 文字改變顏色
    * Color bgColor     | darkModeLightColor1  | 當滑鼠移到按鈕上, 背景改變顏色
+   * String tip        | 提示框不會出現        | 當滑鼠移到按鈕上, 會出現提示框
   */
   /* .whenClickGoto():
    * 參數            | 若填null則自動設為... | 效果
