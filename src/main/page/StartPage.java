@@ -31,7 +31,7 @@ public class StartPage extends Page{
 
     JPanel twoButton = new JPanel(new GridLayout(1, 2, buttonGap, 0));
     twoButton.setBounds(buttonGap*2, 130, WINDOW_WIDTH-buttonGap*6, 500);
-    twoButton.setBackground(darkModeBgColor);
+    twoButton.setBackground(appBgColor);
     
     BetterButton blankStartButton = new BetterButton("從一個空白模板開始", 32, null, null, buttonGap, null);
     blankStartButton.whenHover(null, null, null, null);

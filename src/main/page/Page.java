@@ -20,18 +20,18 @@ public class Page extends JLayeredPane{
   protected final int WINDOW_HEIGHT = 720;
   private JPanel pane;
   private Font font;
-  protected Color darkModeBgColor;
-  protected Color darkModeLightColor1;
+  protected Color appBgColor;
+  protected Color appLightColor1;
 
   protected Page(JPanel pane, Font font){
     this.pane = pane;
     this.font = font;
-    darkModeBgColor = new Color(40, 40, 40);
-    darkModeLightColor1 = new Color(255, 255, 255);
+    appBgColor = new Color(40, 40, 40);
+    appLightColor1 = new Color(255, 255, 255);
 
     setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     setOpaque(true);
-    setBackground(darkModeBgColor);
+    setBackground(appBgColor);
   }
 
   protected Font getF(){ // only for Page constructor
@@ -54,7 +54,7 @@ public class Page extends JLayeredPane{
     public BetterTextBox(String text, float textSize, Color textColor, boolean isItalic, int horizonMode, Color bgColor){
       super(text, horizonMode);
       setFont(getF(textSize, isItalic?Font.ITALIC:Font.PLAIN));
-      setForeground((textColor != null)?textColor:darkModeLightColor1);
+      setForeground((textColor != null)?textColor:appLightColor1);
       if (bgColor != null){
         setOpaque(true);
         setBackground(bgColor);
@@ -64,12 +64,12 @@ public class Page extends JLayeredPane{
   /* 參數             | 若填null則自動設為... | 效果
    * String text      | 必填                 | 文字
    * int textSize     | 必填                 | 文字大小
-   * Color textColor  | darkModeLightColor1  | 文字顏色
+   * Color textColor  | appLightColor1  | 文字顏色
    * boolean isItalic | 必填                 | 是否斜體
    * int horizonMode  | 必填                 | 向左對齊 -> SwingConstants.LEFT
    *                                           置中對齊 -> SwingConstants.CENTER
    *                                           向右對齊 -> SwingConstants.RIGHT
-   * Color bgColor    | darkModeBgColor      | 背景顏色
+   * Color bgColor    | appBgColor      | 背景顏色
   */
 
   protected class BetterButton extends JButton{
@@ -82,13 +82,13 @@ public class Page extends JLayeredPane{
 
       if (textSize > 0){
         setFont(getF(textSize));
-        setForeground((textColor != null)?textColor:darkModeLightColor1);
+        setForeground((textColor != null)?textColor:appLightColor1);
       }
 
-      setBackground((bgColor != null)?bgColor:darkModeBgColor);
+      setBackground((bgColor != null)?bgColor:appBgColor);
 
       if (borderWidth == 0) setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 0), 0));
-      else setBorder(BorderFactory.createLineBorder((borderColor != null)?borderColor:darkModeLightColor1, borderWidth));
+      else setBorder(BorderFactory.createLineBorder((borderColor != null)?borderColor:appLightColor1, borderWidth));
       
       setFocusPainted(false);
     }
@@ -105,8 +105,8 @@ public class Page extends JLayeredPane{
           oldTextColor = getForeground();
           oldBgColor = getBackground();
           setText((text != null)?text:oldText);
-          setForeground((textColor != null)?textColor:darkModeBgColor);
-          setBackground((bgColor != null)?bgColor:darkModeLightColor1);
+          setForeground((textColor != null)?textColor:appBgColor);
+          setBackground((bgColor != null)?bgColor:appLightColor1);
         }
         @Override
         public void mouseExited(MouseEvent me){
@@ -129,10 +129,10 @@ public class Page extends JLayeredPane{
    * 參數              | 若填null則自動設為... | 效果
    * String text       | "" (空字串)          | 按鈕內的文字
    * int textSize      | 必填                 | 文字大小
-   * Color textColor   | darkModeLightColor1  | 文字顏色
-   * Color bgColor     | darkModeBgColor      | 按鈕背景顏色
+   * Color textColor   | appLightColor1  | 文字顏色
+   * Color bgColor     | appBgColor      | 按鈕背景顏色
    * int borderWidth   | 必填                 | 邊框粗度
-   * Color borderColor | darkModeLightColor1  | 邊框顏色
+   * Color borderColor | appLightColor1  | 邊框顏色
   */
   /* .setBgImage():
    * 參數        | 若填null則自動設為... | 效果
@@ -141,8 +141,8 @@ public class Page extends JLayeredPane{
   /* .whenHover():
    * 參數              | 若填null則自動設為... | 效果
    * String text       | 原本的字串            | 當滑鼠移到按鈕上, 文字改變
-   * Color textColor   | darkModeBgColor      | 當滑鼠移到按鈕上, 文字改變顏色
-   * Color bgColor     | darkModeLightColor1  | 當滑鼠移到按鈕上, 背景改變顏色
+   * Color textColor   | appBgColor      | 當滑鼠移到按鈕上, 文字改變顏色
+   * Color bgColor     | appLightColor1  | 當滑鼠移到按鈕上, 背景改變顏色
    * String tip        | 提示框不會出現        | 當滑鼠移到按鈕上, 會出現提示框
   */
   /* .whenClickGoto():
