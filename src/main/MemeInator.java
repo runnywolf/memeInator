@@ -3,6 +3,9 @@ package main;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Insets;
+
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -29,9 +32,18 @@ public class MemeInator extends JFrame{
   private void init(){
     Font font = newFont.getF();
     
-    UIManager.put("ToolTip.foreground", Color.WHITE);
+    UIManager.put("ToolTip.font", font.deriveFont(Font.PLAIN, 14));
+    UIManager.put("ToolTip.foreground", new Color(255, 255, 127));
     UIManager.put("ToolTip.background", Color.BLACK);
+    UIManager.put("ToolTip.border", BorderFactory.createLineBorder(Color.WHITE, 1));
     ToolTipManager.sharedInstance().setInitialDelay(0);
+
+    UIManager.put("TextField.font", font.deriveFont(Font.PLAIN, 16));
+    UIManager.put("TextField.foreground", new Color(0, 255, 255));
+    UIManager.put("TextField.background", new Color(80, 80, 80));
+    UIManager.put("TextField.caretForeground", Color.WHITE);
+    UIManager.put("TextField.margin", new Insets(0, 10, 0, 0));
+    UIManager.put("TextField.border", BorderFactory.createLineBorder(Color.WHITE, 2));
 
     JPanel pane = new JPanel(new CardLayout());
     pane.add(new StartPage(pane, font), "StartPage");

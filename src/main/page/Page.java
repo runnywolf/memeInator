@@ -15,7 +15,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class Page extends JLayeredPane{
-  protected final String VERSION = "v0.dev-14";
+  protected final String VERSION = "v0.dev-17";
   protected final int WINDOW_WIDTH = 1080;
   protected final int WINDOW_HEIGHT = 720;
   private JPanel pane;
@@ -44,11 +44,11 @@ public class Page extends JLayeredPane{
     return font.deriveFont(style, fontSize);
   }
 
-  protected void changePage(String nextPage){
+  protected void changePage(String pageName){
     CardLayout cardLayout = (CardLayout) pane.getLayout();
-    cardLayout.show(pane, nextPage);
+    cardLayout.show(pane, pageName);
   }
-  // change page to (Page)nextPage
+  // change page to page "pageName"
 
   protected class BetterTextBox extends JLabel{
     public BetterTextBox(String text, float textSize, Color textColor, boolean isItalic, int horizonMode, Color bgColor){

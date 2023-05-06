@@ -1,16 +1,26 @@
 package main.page;
 
 import java.awt.BasicStroke;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class EditorPage extends Page{
+  private JButton[][] buttonGroups;
   private int toolbarHeight;
+  private SetCanvasSizeBar setCanvasSizeBar;
+  private JPanel paramBar;
   private JPanel canvas;
   private int canvasX;
   private int canvasY;
@@ -19,19 +29,25 @@ public class EditorPage extends Page{
 
   public EditorPage(JPanel pane, Font font){
     super(pane, font);
-    
-    add(makeToolList(), Integer.valueOf(0));
-    toolbarHeight = 70;
 
     canvasX = 100;
     canvasY = 100;
     canvasWidth = 100;
     canvasHeight = 100;
+    
+    paramBar = new JPanel(new CardLayout());
+    add(makeToolbar(), Integer.valueOf(0));
+    add(makeParamBar(), Integer.valueOf(100));
+    setParamBar("empty");
+    toolbarHeight = 106;
 
     add(makeCanvas(), Integer.valueOf(0));
     add(makeCanvasCover(), Integer.valueOf(2));
   }
 
+  private class MakeButton{
+    
+  }
   private BetterButton makeButton(String path, String tip){
     BetterButton button = new BetterButton("", 0, null, null, 0, null);
     button.whenHover(null, null, new Color(90, 90, 90), tip);
@@ -63,8 +79,19 @@ public class EditorPage extends Page{
     BetterButton button = makeButton("img/toolbarIcon/toImgur.png", "匯出並把圖片檔上傳至imgur");
     return button;
   }
+  private BetterButton makeDefaultButton(){
+    BetterButton button = makeButton("img/toolbarIcon/?.png", "預設選取模式");
+    return button;
+  }
   private BetterButton makeSetCanvasSizeButton(){
-    BetterButton button = makeButton("img/toolbarIcon/?.png", "設定畫布範圍");
+    BetterButton button = makeButton("img/toolbarIcon/setCanvasSize.png", "設定畫布範圍");
+    button.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e){
+        setCanvasSizeBar.setInputBoxText(canvasWidth, canvasHeight);
+        setParamBar("setCanvasSize");
+      }
+    });
     return button;
   }
   private BetterButton makeAddImageButton(){
@@ -75,11 +102,11 @@ public class EditorPage extends Page{
     BetterButton button = makeButton("img/toolbarIcon/addTextBox.png", "新增文字方塊");
     return button;
   }
-  private JPanel makeToolList(){
+  private JPanel makeToolbar(){
     JButton[][] buttonGroups = {
       {makeHomeButton()},
       {makeNewTempButton(), makeOpenTempButton(), makeSaveButton(), makeToImagebutton(), makeToImgurButton()},
-      {makeSetCanvasSizeButton(), makeAddImageButton(), makeAddTextBoxButton()}
+      {makeDefaultButton(), makeSetCanvasSizeButton(), makeAddImageButton(), makeAddTextBoxButton()}
     };
     // 按鈕排版
 
@@ -91,6 +118,7 @@ public class EditorPage extends Page{
         g2d.setStroke(new BasicStroke(1));
 
         g2d.drawLine(0, 52, WINDOW_WIDTH, 52);
+        g2d.drawLine(0, 95, WINDOW_WIDTH, 95);
         int currentX = 5;
         for (JButton[] buttonGroup: buttonGroups){
           currentX += 40*buttonGroup.length+20;
@@ -118,6 +146,51 @@ public class EditorPage extends Page{
     // draw buttons
 
     return toolbar;
+  }
+
+  private class EmptyBar extends JPanel{
+    public EmptyBar(){
+      super(new FlowLayout(FlowLayout.LEFT));
+      setOpaque(false);
+    }
+  }
+  private class SetCanvasSizeBar extends EmptyBar{
+    JTextField widthTextField;
+    JTextField heightTextField;
+
+    public SetCanvasSizeBar(){
+      super();
+
+      add(new BetterTextBox("寬度:", 16, appLightColor1, false, SwingConstants.LEFT, null));
+
+      widthTextField = new JTextField();
+      widthTextField.setPreferredSize(new Dimension(60, 30));
+      add(widthTextField);
+
+      add(new BetterTextBox("    高度:", 16, appLightColor1, false, SwingConstants.LEFT, null));
+
+      heightTextField = new JTextField();
+      heightTextField.setPreferredSize(new Dimension(60, 30));
+      add(heightTextField);
+    }
+
+    public void setInputBoxText(int canvasWidth, int canvasHeight){
+      widthTextField.setText(String.valueOf(canvasWidth));
+      heightTextField.setText(String.valueOf(canvasHeight));
+    }
+  }
+  private JPanel makeParamBar(){
+    paramBar.setBounds(6, 54, WINDOW_WIDTH, 40);
+    paramBar.setOpaque(false);
+    
+    paramBar.add(new EmptyBar(), "empty");
+    setCanvasSizeBar = new SetCanvasSizeBar(); paramBar.add(setCanvasSizeBar, "setCanvasSize");
+
+    return paramBar;
+  }
+  private void setParamBar(String barName){
+    CardLayout cardLayout = (CardLayout) paramBar.getLayout();
+    cardLayout.show(paramBar, barName);
   }
 
   private JPanel makeCanvas(){
