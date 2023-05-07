@@ -1,14 +1,15 @@
 package main.page;
 
-import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import main.MemeInator;
+
 public class StartPage extends Page{
-  public StartPage(JPanel pane, Font font){
-    super(pane, font);
+  public StartPage(MemeInator frame){
+    super(frame);
 
     add(makeZhtwTitle(), Integer.valueOf(0));
     add(makeEnTitle(), Integer.valueOf(0));
@@ -17,12 +18,12 @@ public class StartPage extends Page{
   }
 
   private JLabel makeZhtwTitle(){
-    JLabel titleZhtw = new BetterTextBox("迷因產生器", 60, null, false, SwingConstants.CENTER, null);
+    JLabel titleZhtw = new BetterLabel("迷因產生器", 60, null, false, SwingConstants.CENTER, null);
     titleZhtw.setBounds(-6, 20, WINDOW_WIDTH, 70);
     return titleZhtw;
   }
   private JLabel makeEnTitle(){
-    JLabel titleEn = new BetterTextBox("meme-inator", 16, null, false, SwingConstants.CENTER, null);
+    JLabel titleEn = new BetterLabel("meme-inator", 16, null, false, SwingConstants.CENTER, null);
     titleEn.setBounds(-6, 90, WINDOW_WIDTH, 20);
     return titleEn;
   }
@@ -45,7 +46,7 @@ public class StartPage extends Page{
     return twoButton;
   }
   private JLabel makeVersion(){
-    JLabel version = new BetterTextBox(VERSION, 16, null, false, SwingConstants.CENTER, null);
+    JLabel version = new BetterLabel(VERSION, 16, null, false, SwingConstants.CENTER, null);
     version.setBounds(-6, 644, WINDOW_WIDTH, 20);
     return version;
   }

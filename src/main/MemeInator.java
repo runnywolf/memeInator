@@ -4,7 +4,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
-
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,11 +12,17 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 
 import main.page.*;
-import main.tool.NewFont;
+import main.external.NewFont;
 
 public class MemeInator extends JFrame{
+  private final String VERSION = "v0.dev-17";
+  private final int WINDOW_WIDTH = 1080;
+  private final int WINDOW_HEIGHT = 720;
+  private final Color APP_BG_COLOR = new Color(40, 40, 40);
+  private final Color APP_COLOR1 = new Color(255, 255, 255);
   private NewFont newFont;
-
+  private JPanel app;
+  
   public MemeInator(){
     super("迷因產生器");
     setSize(1080, 720); // window size
@@ -26,7 +31,9 @@ public class MemeInator extends JFrame{
     
     newFont = new NewFont("font/NotoSansTC-Bold.otf"); // import font at "memeInator/font/NotoSansTC-Bold.otf"
 
-    SwingUtilities.invokeLater(new Runnable(){public void run(){init();}}); // init
+    SwingUtilities.invokeLater(new Runnable(){
+      public void run(){init();}
+    }); // init
   }
 
   private void init(){
@@ -45,13 +52,21 @@ public class MemeInator extends JFrame{
     UIManager.put("TextField.margin", new Insets(0, 10, 0, 0));
     UIManager.put("TextField.border", BorderFactory.createLineBorder(Color.WHITE, 2));
 
-    JPanel pane = new JPanel(new CardLayout());
-    pane.add(new StartPage(pane, font), "StartPage");
-    pane.add(new EditorPage(pane, font), "SearchPage");
-    pane.add(new EditorPage(pane, font), "EditorPage");
+    app = new JPanel(new CardLayout());
+    app.add(new StartPage(this), "StartPage");
+    app.add(new EditorPage(this), "SearchPage");
+    app.add(new EditorPage(this), "EditorPage");
 
-    setContentPane(pane);
+    setContentPane(app);
     setLocationByPlatform(true);
     setVisible(true);
   }
+
+  public String getVersion(){return VERSION;}
+  public int getWindowWidth(){return WINDOW_WIDTH;}
+  public int getWindowHeight(){return WINDOW_HEIGHT;}
+  public Color getAppBgColor(){return APP_BG_COLOR;}
+  public Color getAppColor1(){return APP_COLOR1;}
+  public Font getF(){return newFont.getF();}
+  public JPanel getApp(){return app;}
 }

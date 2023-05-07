@@ -14,20 +14,25 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import main.MemeInator;
+
 public class Page extends JLayeredPane{
-  protected final String VERSION = "v0.dev-17";
-  protected final int WINDOW_WIDTH = 1080;
-  protected final int WINDOW_HEIGHT = 720;
-  private JPanel pane;
-  private Font font;
+  protected final String VERSION;
+  protected final int WINDOW_WIDTH;
+  protected final int WINDOW_HEIGHT;
   protected Color appBgColor;
   protected Color appLightColor1;
+  private JPanel app;
+  private Font font;
 
-  protected Page(JPanel pane, Font font){
-    this.pane = pane;
-    this.font = font;
+  protected Page(MemeInator frame){
+    VERSION = frame.getVersion();
+    WINDOW_WIDTH = frame.getWindowWidth();
+    WINDOW_HEIGHT = frame.getWindowHeight();
     appBgColor = new Color(40, 40, 40);
     appLightColor1 = new Color(255, 255, 255);
+    app = frame.getApp();
+    font = frame.getF();
 
     setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     setOpaque(true);
@@ -45,13 +50,13 @@ public class Page extends JLayeredPane{
   }
 
   protected void changePage(String pageName){
-    CardLayout cardLayout = (CardLayout) pane.getLayout();
-    cardLayout.show(pane, pageName);
+    CardLayout cardLayout = (CardLayout) app.getLayout();
+    cardLayout.show(app, pageName);
   }
   // change page to page "pageName"
 
-  protected class BetterTextBox extends JLabel{
-    public BetterTextBox(String text, float textSize, Color textColor, boolean isItalic, int horizonMode, Color bgColor){
+  public class BetterLabel extends JLabel{
+    public BetterLabel(String text, float textSize, Color textColor, boolean isItalic, int horizonMode, Color bgColor){
       super(text, horizonMode);
       setFont(getF(textSize, isItalic?Font.ITALIC:Font.PLAIN));
       setForeground((textColor != null)?textColor:appLightColor1);
@@ -61,18 +66,19 @@ public class Page extends JLayeredPane{
       }
     }
   }
-  /* 參數             | 若填null則自動設為... | 效果
+  /* BetterLabel():
+   * 參數             | 若填null則自動設為... | 效果
    * String text      | 必填                 | 文字
    * int textSize     | 必填                 | 文字大小
-   * Color textColor  | appLightColor1  | 文字顏色
+   * Color textColor  | appLightColor1       | 文字顏色
    * boolean isItalic | 必填                 | 是否斜體
    * int horizonMode  | 必填                 | 向左對齊 -> SwingConstants.LEFT
    *                                           置中對齊 -> SwingConstants.CENTER
    *                                           向右對齊 -> SwingConstants.RIGHT
-   * Color bgColor    | appBgColor      | 背景顏色
+   * Color bgColor    | appBgColor           | 背景顏色
   */
 
-  protected class BetterButton extends JButton{
+  public class BetterButton extends JButton{
     private String oldText;
     private Color oldTextColor;
     private Color oldBgColor;
