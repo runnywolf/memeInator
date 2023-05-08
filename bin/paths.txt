@@ -1,6 +1,6 @@
-c:\Users\ericc\OneDrive\??\GitHub\memeInator\src\MemeInatorTest.java
-c:\Users\ericc\OneDrive\??\GitHub\memeInator\src\main\MemeInator.java
-c:\Users\ericc\OneDrive\??\GitHub\memeInator\src\main\page\Page.java
-c:\Users\ericc\OneDrive\??\GitHub\memeInator\src\main\page\SearchPage.java
-c:\Users\ericc\OneDrive\??\GitHub\memeInator\src\main\page\StartPage.java
-c:\Users\ericc\OneDrive\??\GitHub\memeInator\src\main\tool\NewFont.java
+c:\Users\ericc\Documents\GitHub\memeInator\src\MemeInatorTest.java
+c:\Users\ericc\Documents\GitHub\memeInator\src\main\MemeInator.java
+c:\Users\ericc\Documents\GitHub\memeInator\src\main\page\Page.java
+c:\Users\ericc\Documents\GitHub\memeInator\src\main\page\SearchPage.java
+c:\Users\ericc\Documents\GitHub\memeInator\src\main\page\StartPage.java
+c:\Users\ericc\Documents\GitHub\memeInator\src\main\tool\NewFont.java
