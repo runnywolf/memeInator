@@ -54,7 +54,7 @@ public class MemeInator extends JFrame{
 
     app = new JPanel(new CardLayout());
     app.add(new StartPage(this), "StartPage");
-    app.add(new EditorPage(this), "SearchPage");
+    app.add(new SearchPage(this), "SearchPage");
     app.add(new EditorPage(this), "EditorPage");
 
     setContentPane(app);
