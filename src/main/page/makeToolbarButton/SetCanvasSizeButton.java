@@ -1,8 +1,8 @@
 package main.page.makeToolbarButton;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -11,15 +11,22 @@ import main.page.EditorPage;
 public class SetCanvasSizeButton extends EmptyButton{
   JTextField widthTextField;
   JTextField heightTextField;
+  boolean isInputValueSetting = false;
 
   public SetCanvasSizeButton(EditorPage page, String tip, String path){
     super(page, tip, path);
-
     makeBar();
-    
-    button.addActionListener(new ActionListener(){
-      @Override
-      public void actionPerformed(ActionEvent e){whenClick();}
+
+    widthTextField.getDocument().addDocumentListener(new DocumentListener(){
+      public void changedUpdate(DocumentEvent e){whenInputChange();}
+      public void insertUpdate(DocumentEvent e){whenInputChange();}
+      public void removeUpdate(DocumentEvent e){whenInputChange();}
+    });
+
+    heightTextField.getDocument().addDocumentListener(new DocumentListener(){
+      public void changedUpdate(DocumentEvent e){whenInputChange();}
+      public void insertUpdate(DocumentEvent e){whenInputChange();}
+      public void removeUpdate(DocumentEvent e){whenInputChange();}
     });
   }
 
@@ -36,9 +43,25 @@ public class SetCanvasSizeButton extends EmptyButton{
     heightTextField.setPreferredSize(new Dimension(60, 30));
     bar.add(heightTextField);
   }
-  private void whenClick(){
-    page.setPanelPage("setCanvasSize");
+  
+  @Override
+  public void whenClick(){
+    page.setBarPage("setCanvasSize");
+    isInputValueSetting = true;
     widthTextField.setText(String.valueOf(page.getCanvasWidth()));
     heightTextField.setText(String.valueOf(page.getCanvasHeight()));
+    isInputValueSetting = false;
+    page.setCanvasSizeButtonClick();
+  }
+
+  private void whenInputChange(){
+    if (isInputValueSetting) return;
+    try{
+      page.setCanvasWidth(Integer.valueOf(widthTextField.getText()));
+    }catch (Exception ex){}
+    try{
+      page.setCanvasHeight(Integer.valueOf(heightTextField.getText()));
+    }catch (Exception ex){}
+    page.setCanvasSizeButtonClick();
   }
 }

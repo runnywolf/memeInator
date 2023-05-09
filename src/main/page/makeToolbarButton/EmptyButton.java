@@ -1,6 +1,8 @@
 package main.page.makeToolbarButton;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
 import javax.swing.JPanel;
 
@@ -17,10 +19,18 @@ public class EmptyButton{
     button = page.new BetterButton("", 0, null, null, 0, null);
     button.whenHover(null, null, new Color(90, 90, 90), tip);
     button.setBgImage(path);
+    button.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e){
+        whenClick();
+      }
+    });
 
     bar = new JPanel(new FlowLayout(FlowLayout.LEFT));
     bar.setOpaque(false);
   }
+
+  public void whenClick(){}
 
   public BetterButton getButton(){return button;}
   public JPanel getBar(){return bar;}

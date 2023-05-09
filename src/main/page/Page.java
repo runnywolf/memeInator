@@ -135,8 +135,8 @@ public class Page extends JLayeredPane{
    * 參數              | 若填null則自動設為... | 效果
    * String text       | "" (空字串)          | 按鈕內的文字
    * int textSize      | 必填                 | 文字大小
-   * Color textColor   | appLightColor1  | 文字顏色
-   * Color bgColor     | appBgColor      | 按鈕背景顏色
+   * Color textColor   | appLightColor1       | 文字顏色
+   * Color bgColor     | appBgColor           | 按鈕背景顏色
    * int borderWidth   | 必填                 | 邊框粗度
    * Color borderColor | appLightColor1  | 邊框顏色
   */
