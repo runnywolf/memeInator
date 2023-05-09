@@ -58,7 +58,7 @@ public class EditorPage extends Page{
     paramBar = new JPanel(new CardLayout());
     add(makeToolbar(), Integer.valueOf(0));
     add(makeParamBar(), Integer.valueOf(100));
-    setBarPage("empty");
+    setBarPage("default");
     toolbarHeight = 106;
 
     CANVAS_BG_WIDTH = 1044;
@@ -111,7 +111,7 @@ public class EditorPage extends Page{
     paramBar.setBounds(6, 54, WINDOW_WIDTH, 40);
     paramBar.setOpaque(false);
     
-    paramBar.add(new EmptyButton(this, "", "").getBar(), "empty");
+    paramBar.add(new EmptyButton(this, "", "").getBar(), "default");
     paramBar.add(buttonGroups[2][1].getBar(), "setCanvasSize");
 
     return paramBar;
@@ -281,6 +281,10 @@ public class EditorPage extends Page{
       this.h = h;
       calcButtonLocation();
     }
+  }
+  public void setDefaultButtonClick(){
+    setBarPage("default");
+    dragBorder.setVisible(false);
   }
   public void setCanvasSizeButtonClick(){
     dragBorder.setButtonLocation(canvasX, canvasY, canvasWidth, canvasHeight);

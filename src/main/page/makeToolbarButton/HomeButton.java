@@ -7,4 +7,9 @@ public class HomeButton extends EmptyButton{
     super(page, tip, path);
     button.whenClickGoto("StartPage");
   }
+
+  @Override
+  public void whenClick(){
+    page.setDefaultButtonClick();
+  }
 }
