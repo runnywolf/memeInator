@@ -39,13 +39,13 @@ public class Page extends JLayeredPane{
     setBackground(appBgColor);
   }
 
-  protected Font getF(){ // only for Page constructor
+  public Font getF(){ // only for Page constructor
     return font;
   }
-  protected Font getF(float fontSize){ // get the font, only font size
+  public Font getF(float fontSize){ // get the font, only font size
     return font.deriveFont(Font.PLAIN, fontSize);
   }
-  protected Font getF(float fontSize, int style){ // get the font, but you can choose style and size
+  public Font getF(float fontSize, int style){ // get the font, but you can choose style and size
     return font.deriveFont(style, fontSize);
   }
 

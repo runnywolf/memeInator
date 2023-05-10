@@ -1,8 +1,0 @@
-{
-  "objects":[
-    {"type":"image", "string":"main.png", "x":0, "y":0, "scale":0.5},
-    {"type":"text", "string":"文字內容1", "x":0, "y":0},
-    {"type":"text", "string":"文字內容2", "x":0, "y":0},
-    {"type":"text", "string":"文字內容3", "x":0, "y":0}
-  ]
-}

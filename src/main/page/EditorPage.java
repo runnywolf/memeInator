@@ -66,7 +66,7 @@ public class EditorPage extends Page{
     setBarPage("default");
 
     add(makeCanvas(), Integer.valueOf(0));
-    add(template = new Template(""), Integer.valueOf(1));
+    add(template = new Template(this, "evolutionPooh"), Integer.valueOf(1));
     redrawCanvasCover();
     add(dragBorder = new DragBorder(), Integer.valueOf(3));
   }
@@ -133,6 +133,8 @@ public class EditorPage extends Page{
 
     return canvas;
   }
+
+
 
   public void redrawCanvasCover(){
     if (canvasCover != null) remove(canvasCover);
