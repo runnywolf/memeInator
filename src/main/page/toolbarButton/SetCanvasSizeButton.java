@@ -1,4 +1,4 @@
-package main.page.makeToolbarButton;
+package main.page.toolbarButton;
 
 import java.awt.Dimension;
 import javax.swing.event.DocumentEvent;

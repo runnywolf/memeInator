@@ -10,30 +10,35 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import javax.swing.JButton;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import main.MemeInator;
-import main.page.makeToolbarButton.*;
+import main.page.toolbarButton.*;
+import main.tool.Template;
 
 public class EditorPage extends Page{
   private EmptyButton[][] buttonGroups;
-  private int toolbarHeight;
   private String paramBarCurrentPage;
   private JPanel paramBar;
-  private final int CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT;
+  private final int TOOLBAR_HEIGHT = 106;
+  private final int CANVAS_BG_WIDTH = 1044;
+  private final int CANVAS_BG_HEIGHT = 565;
   private JPanel canvas;
+  private JLayeredPane template;
   private int canvasX, canvasY, canvasWidth, canvasHeight;
-  private final int MIN_CANVAS_WIDTH = 10, MIN_CANVAS_HEIGHT = 10;
+  private final int MIN_CANVAS_WIDTH = 10;
+  private final int MIN_CANVAS_HEIGHT = 10;
   private JPanel canvasCover;
   private DragBorder dragBorder;
 
   public EditorPage(MemeInator frame){
     super(frame);
     
-    canvasX = 100;
-    canvasY = 100;
-    canvasWidth = 100;
-    canvasHeight = 100;
+    canvasX = 272;
+    canvasY = 32;
+    canvasWidth = 500;
+    canvasHeight = 500;
     
     EmptyButton[][] groups = {
       {
@@ -47,7 +52,7 @@ public class EditorPage extends Page{
         new ToImgurButton(this, "匯出並把圖片檔上傳至imgur", "img/toolbarIcon/toImgur.png")
       },
       {
-        new DefaultButton(this, "預設選取模式", "img/toolbarIcon/?.png"),
+        new DefaultButton(this, "預設選取模式", "img/toolbarIcon/default.png"),
         new SetCanvasSizeButton(this, "設定畫布範圍", "img/toolbarIcon/setCanvasSize.png"),
         new AddImageButton(this, "新增圖片", "img/toolbarIcon/addImage.png"),
         new AddTextBoxButton(this, "新增文字方塊", "img/toolbarIcon/addTextBox.png")
@@ -57,14 +62,12 @@ public class EditorPage extends Page{
 
     paramBar = new JPanel(new CardLayout());
     add(makeToolbar(), Integer.valueOf(0));
-    add(makeParamBar(), Integer.valueOf(100));
+    add(makeParamBar(), Integer.valueOf(0));
     setBarPage("default");
-    toolbarHeight = 106;
 
-    CANVAS_BG_WIDTH = 1044;
-    CANVAS_BG_HEIGHT = WINDOW_HEIGHT-toolbarHeight-49;
     add(makeCanvas(), Integer.valueOf(0));
-    drawCanvasCover();
+    add(template = new Template(""), Integer.valueOf(1));
+    redrawCanvasCover();
     add(dragBorder = new DragBorder(), Integer.valueOf(3));
   }
 
@@ -125,13 +128,13 @@ public class EditorPage extends Page{
   private JPanel makeCanvas(){
     canvas = new JPanel();
     canvas.setLayout(null);
-    canvas.setBounds(10, toolbarHeight, CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT);
+    canvas.setBounds(10, TOOLBAR_HEIGHT, CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT);
     canvas.setBackground(Color.WHITE);
 
     return canvas;
   }
 
-  public void drawCanvasCover(){
+  public void redrawCanvasCover(){
     if (canvasCover != null) remove(canvasCover);
 
     JPanel cover = new JPanel(){
@@ -150,10 +153,9 @@ public class EditorPage extends Page{
     }; // draw cover
 
     cover.setOpaque(false);
-    cover.setBounds(10, toolbarHeight, CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT);
-
-    add(cover, Integer.valueOf(2));
+    cover.setBounds(10, TOOLBAR_HEIGHT, CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT);
     canvasCover = cover;
+    add(canvasCover, Integer.valueOf(2));
   }
 
   private int keepInRange(int num, int lowerBound, int upperBound){
@@ -167,7 +169,7 @@ public class EditorPage extends Page{
     private int mouseX, mouseY;
 
     public DragBorder(){
-      setBounds(10, toolbarHeight, CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT);
+      setBounds(10, TOOLBAR_HEIGHT, CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT);
       setOpaque(false);
       setLayout(null);
       
@@ -299,10 +301,10 @@ public class EditorPage extends Page{
 
   public void setCanvasWidth(int width){
     canvasWidth = keepInRange(width, MIN_CANVAS_WIDTH, CANVAS_BG_WIDTH-canvasX);
-    drawCanvasCover();
+    redrawCanvasCover();
   }
   public void setCanvasHeight(int height){
     canvasHeight = keepInRange(height, MIN_CANVAS_WIDTH, CANVAS_BG_HEIGHT-canvasY);
-    drawCanvasCover();
+    redrawCanvasCover();
   }
 }

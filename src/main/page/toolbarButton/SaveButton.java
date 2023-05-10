@@ -1,4 +1,4 @@
-package main.page.makeToolbarButton;
+package main.page.toolbarButton;
 
 import main.page.EditorPage;
 
