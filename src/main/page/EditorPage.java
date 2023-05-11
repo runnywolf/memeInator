@@ -63,7 +63,6 @@ public class EditorPage extends Page{
 
     add(canvas = makeCanvas(), Integer.valueOf(0));
 
-    //importTemplate("evolutionPooh");
     importTemplate(null);
 
     redrawCanvasCover();
@@ -142,10 +141,12 @@ public class EditorPage extends Page{
     canvasX = (CANVAS_BG_WIDTH-canvasWidth)/2;
     canvasY = (CANVAS_BG_HEIGHT-canvasHeight)/2;
     redrawTemplate();
+    setDefaultButtonClick();
   }
   private void redrawTemplate(){
     if (templateLayer != null) remove(templateLayer);
     add(templateLayer = template.getTemplateLayer(10+canvasX, TOOLBAR_HEIGHT+canvasY), Integer.valueOf(1));
+    redrawCanvasCover();
   }
 
   public void redrawCanvasCover(){
@@ -299,6 +300,7 @@ public class EditorPage extends Page{
     }
   }
   public void setDefaultButtonClick(){
+    if (dragBorder == null) return;
     setBarPage("default");
     dragBorder.setVisible(false);
   }
