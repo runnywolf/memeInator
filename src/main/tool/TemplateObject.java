@@ -1,5 +1,6 @@
 package main.tool;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 
@@ -12,7 +13,7 @@ public class TemplateObject{
   private String text;
   public JLabel box;
   public int x, y, w, h;
-  private double imageScale;
+  public double imageScale;
 
   public TemplateObject(String templateName, String objectString, Font font){
     String[] kvList = objectString.split(" ");
@@ -42,10 +43,13 @@ public class TemplateObject{
           break;
       }
     }
+    // read and encoding template format file
+
     switch (type){
       case "text":
         box = new JLabel(text, SwingConstants.CENTER);
         box.setFont(font);
+        box.setForeground(Color.BLACK);
         box.setBounds(x, y, w, h);
         break;
       case "image":
@@ -57,5 +61,6 @@ public class TemplateObject{
         box.setBounds(x, y, w, h);
         break;
     }
+    // use data to make text or image JLabel
   }
 }

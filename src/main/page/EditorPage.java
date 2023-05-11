@@ -25,7 +25,8 @@ public class EditorPage extends Page{
   private final int CANVAS_BG_WIDTH = 1044;
   private final int CANVAS_BG_HEIGHT = 565;
   private JPanel canvas;
-  private JLayeredPane template;
+  private Template template;
+  private JLayeredPane templateLayer;
   private int canvasX, canvasY, canvasWidth, canvasHeight;
   private final int MIN_CANVAS_WIDTH = 10;
   private final int MIN_CANVAS_HEIGHT = 10;
@@ -34,11 +35,6 @@ public class EditorPage extends Page{
 
   public EditorPage(MemeInator frame){
     super(frame);
-    
-    canvasX = 272;
-    canvasY = 32;
-    canvasWidth = 500;
-    canvasHeight = 500;
     
     EmptyButton[][] groups = {
       {
@@ -60,14 +56,18 @@ public class EditorPage extends Page{
     }; // 按鈕排版
     buttonGroups = groups;
 
-    paramBar = new JPanel(new CardLayout());
     add(makeToolbar(), Integer.valueOf(0));
-    add(makeParamBar(), Integer.valueOf(0));
+
+    add(paramBar = makeParamBar(), Integer.valueOf(0));
     setBarPage("default");
 
-    add(makeCanvas(), Integer.valueOf(0));
-    add(template = new Template(this, "evolutionPooh"), Integer.valueOf(1));
+    add(canvas = makeCanvas(), Integer.valueOf(0));
+
+    //importTemplate("evolutionPooh");
+    importTemplate(null);
+
     redrawCanvasCover();
+
     add(dragBorder = new DragBorder(), Integer.valueOf(3));
   }
 
@@ -111,13 +111,14 @@ public class EditorPage extends Page{
   }
 
   private JPanel makeParamBar(){
-    paramBar.setBounds(6, 54, WINDOW_WIDTH, 40);
-    paramBar.setOpaque(false);
+    JPanel bar = new JPanel(new CardLayout());
+    bar.setBounds(6, 54, WINDOW_WIDTH, 40);
+    bar.setOpaque(false);
     
-    paramBar.add(new EmptyButton(this, "", "").getBar(), "default");
-    paramBar.add(buttonGroups[2][1].getBar(), "setCanvasSize");
+    bar.add(new EmptyButton(this, "", "").getBar(), "default");
+    bar.add(buttonGroups[2][1].getBar(), "setCanvasSize");
 
-    return paramBar;
+    return bar;
   }
   public void setBarPage(String pageName){
     paramBarCurrentPage = pageName;
@@ -126,15 +127,26 @@ public class EditorPage extends Page{
   }
 
   private JPanel makeCanvas(){
-    canvas = new JPanel();
-    canvas.setLayout(null);
-    canvas.setBounds(10, TOOLBAR_HEIGHT, CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT);
-    canvas.setBackground(Color.WHITE);
+    JPanel panel = new JPanel();
+    panel.setLayout(null);
+    panel.setBounds(10, TOOLBAR_HEIGHT, CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT);
+    panel.setBackground(Color.WHITE);
 
-    return canvas;
+    return panel;
   }
 
-
+  public void importTemplate(String templateName){
+    template = new Template(this, templateName);
+    canvasWidth = template.getWidth();
+    canvasHeight = template.getHeight();
+    canvasX = (CANVAS_BG_WIDTH-canvasWidth)/2;
+    canvasY = (CANVAS_BG_HEIGHT-canvasHeight)/2;
+    redrawTemplate();
+  }
+  private void redrawTemplate(){
+    if (templateLayer != null) remove(templateLayer);
+    add(templateLayer = template.getTemplateLayer(10+canvasX, TOOLBAR_HEIGHT+canvasY), Integer.valueOf(1));
+  }
 
   public void redrawCanvasCover(){
     if (canvasCover != null) remove(canvasCover);

@@ -11,5 +11,6 @@ public class HomeButton extends EmptyButton{
   @Override
   public void whenClick(){
     page.setDefaultButtonClick();
+    page.importTemplate(null);
   }
 }

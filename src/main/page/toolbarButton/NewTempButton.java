@@ -6,4 +6,9 @@ public class NewTempButton extends EmptyButton{
   public NewTempButton(EditorPage page, String tip, String path){
     super(page, tip, path);
   }
+
+  @Override
+  public void whenClick(){
+    page.importTemplate(null);
+  }
 }
