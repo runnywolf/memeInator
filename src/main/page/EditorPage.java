@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -18,13 +19,13 @@ import main.page.toolbarButton.*;
 import main.tool.Template;
 
 public class EditorPage extends Page{
+  MemeInator frame;
   private EmptyButton[][] buttonGroups;
   private String paramBarCurrentPage;
   private JPanel paramBar;
   private final int TOOLBAR_HEIGHT = 106;
   private final int CANVAS_BG_WIDTH = 1044;
   private final int CANVAS_BG_HEIGHT = 565;
-  private JPanel canvas;
   private Template template;
   private JLayeredPane templateLayer;
   private int canvasX, canvasY, canvasWidth, canvasHeight;
@@ -35,6 +36,7 @@ public class EditorPage extends Page{
 
   public EditorPage(MemeInator frame){
     super(frame);
+    this.frame = frame;
     
     EmptyButton[][] groups = {
       {
@@ -61,7 +63,7 @@ public class EditorPage extends Page{
     add(paramBar = makeParamBar(), Integer.valueOf(0));
     setBarPage("default");
 
-    add(canvas = makeCanvas(), Integer.valueOf(0));
+    add(makeCanvas(), Integer.valueOf(0));
 
     importTemplate(null);
 
@@ -315,6 +317,11 @@ public class EditorPage extends Page{
   public int getCanvasWidth(){return canvasWidth;}
   public int getCanvasHeight(){return canvasHeight;}
   public DragBorder getDragBorder(){return dragBorder;}
+  public Rectangle getRealCanvasRect(){
+    int windowX = frame.getLocationOnScreen().x;
+    int windowY = frame.getLocationOnScreen().y;
+    return new Rectangle(7+windowX+10+canvasX, 31+windowY+TOOLBAR_HEIGHT+canvasY, canvasWidth, canvasHeight);
+  }
 
   public void setCanvasWidth(int width){
     canvasWidth = keepInRange(width, MIN_CANVAS_WIDTH, CANVAS_BG_WIDTH-canvasX);

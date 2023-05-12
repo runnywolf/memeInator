@@ -94,15 +94,22 @@ public class Template{
     try{
       BufferedWriter writer = new BufferedWriter(new FileWriter("data/save/"+templateName+"/format.txt", StandardCharsets.UTF_8));
       writer.write(String.format("%d %d\n", width, height));
-      for (TemplateObject obj: objList) writer.write(obj.getString()+"\n");
+      int c = 0;
+      for (TemplateObject obj: objList){
+        if (obj.type.equals("image")){
+          c++;
+          obj.text = String.format("img%d.png", c);
+          ImageIO.write(toRenderedImage(obj.image), "png", new File("data/save/"+templateName+"/"+obj.text));
+        }
+        writer.write(obj.getString()+"\n");
+      }
       writer.close();
     }catch (Exception e){
       JOptionPane.showMessageDialog(null, "format.txt存檔失敗", "錯誤", JOptionPane.WARNING_MESSAGE);
     }
     for (TemplateObject obj: objList) if (obj.type.equals("image")){
       try{
-        File f = new File("data/save/"+templateName+"/"+obj.text);
-        ImageIO.write(toRenderedImage(obj.image), "png", f);
+        ImageIO.write(toRenderedImage(obj.image), "png", new File("data/save/"+templateName+"/"+obj.text));
       }catch (Exception e){
         JOptionPane.showMessageDialog(null, "圖片存檔失敗", "錯誤", JOptionPane.WARNING_MESSAGE);
       }
