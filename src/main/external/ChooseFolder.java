@@ -19,7 +19,7 @@ public class ChooseFolder{
     int option = fileChooser.showOpenDialog(new JFrame());
     if (option == JFileChooser.APPROVE_OPTION) {
       File selectedFile = fileChooser.getSelectedFile();
-      return selectedFile.getName();
+      return selectedFile.getAbsolutePath();
     }
     return null;
   }

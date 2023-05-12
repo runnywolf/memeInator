@@ -10,7 +10,7 @@ public class OpenTempButton extends EmptyButton{
 
   @Override
   public void whenClick(){
-    String templatePath = new ChooseFolder().getPath("data/template");
+    String templatePath = new ChooseFolder().getPath("data/save");
     if (templatePath != null) page.importTemplate(templatePath);
   }
 }

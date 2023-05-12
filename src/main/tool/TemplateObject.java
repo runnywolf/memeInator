@@ -3,19 +3,19 @@ package main.tool;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class TemplateObject{
   public String type;
-  private String text;
+  public String text;
   public JLabel box;
   public int x, y, w, h;
   public double imageScale;
+  public Image image;
 
-  public TemplateObject(String templateName, String objectString, Font font){
+  public TemplateObject(String templatePath, String objectString, Font font){
     String[] kvList = objectString.split(" ");
     for (String kv: kvList){
       String[] kvSplit = kv.split("=");
@@ -53,7 +53,7 @@ public class TemplateObject{
         box.setBounds(x, y, w, h);
         break;
       case "image":
-        Image image = new ImageIcon("data/template/"+templateName+"/"+text).getImage();
+        image = new ImageIcon(templatePath+"/"+text).getImage();
         w = (int)(image.getWidth(null)*imageScale);
         h = (int)(image.getHeight(null)*imageScale);
         Image scaleImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
@@ -62,5 +62,15 @@ public class TemplateObject{
         break;
     }
     // use data to make text or image JLabel
+  }
+
+  public String getString(){
+    switch (type){
+      case "text":
+        return String.format("type=text string=%s x=%d y=%d w=%d h=%d", text, x, y, w, h);
+      case "image":
+        return String.format("type=image string=%s x=%d y=%d scale=%.3f", text, x, y, imageScale);
+    }
+    return null;
   }
 }

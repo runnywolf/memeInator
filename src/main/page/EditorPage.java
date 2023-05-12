@@ -134,8 +134,8 @@ public class EditorPage extends Page{
     return panel;
   }
 
-  public void importTemplate(String templateName){
-    template = new Template(this, templateName);
+  public void importTemplate(String templatePath){
+    template = new Template(this, templatePath);
     canvasWidth = template.getWidth();
     canvasHeight = template.getHeight();
     canvasX = (CANVAS_BG_WIDTH-canvasWidth)/2;
@@ -309,6 +309,7 @@ public class EditorPage extends Page{
     dragBorder.setVisible(true);
   }
 
+  public Template getTemplate(){return template;}
   public int getCanvasX(){return canvasX;}
   public int getCanvasY(){return canvasY;}
   public int getCanvasWidth(){return canvasWidth;}
