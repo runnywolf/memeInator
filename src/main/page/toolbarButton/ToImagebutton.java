@@ -16,6 +16,8 @@ public class ToImagebutton extends EmptyButton{
 
   @Override
   public void whenClick(){
+    page.setDefaultButtonClick();
+    
     String imageName = JOptionPane.showInputDialog(null, "[匯出為圖片檔] 圖片檔名稱");
     if (imageName == null) return;
     if (!imageName.matches("^[a-zA-Z0-9]+$")){

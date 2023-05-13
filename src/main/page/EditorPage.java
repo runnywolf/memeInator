@@ -17,17 +17,21 @@ import javax.swing.JPanel;
 import main.MemeInator;
 import main.page.toolbarButton.*;
 import main.tool.Template;
+import main.tool.TemplateObject;
 
 public class EditorPage extends Page{
-  MemeInator frame;
+  private MemeInator frame;
   private EmptyButton[][] buttonGroups;
   private String paramBarCurrentPage;
   private JPanel paramBar;
   private final int TOOLBAR_HEIGHT = 106;
   private final int CANVAS_BG_WIDTH = 1044;
   private final int CANVAS_BG_HEIGHT = 565;
+  private int canvasLastX, canvasLastY;
+  private int canvasMousePressX, canvasMousePressY;
   private Template template;
   private JLayeredPane templateLayer;
+  private TemplateObject objectSelected;
   private int canvasX, canvasY, canvasWidth, canvasHeight;
   private final int MIN_CANVAS_WIDTH = 10;
   private final int MIN_CANVAS_HEIGHT = 10;
@@ -67,7 +71,7 @@ public class EditorPage extends Page{
 
     importTemplate(null);
 
-    redrawCanvasCover();
+    redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
 
     add(dragBorder = new DragBorder(), Integer.valueOf(3));
   }
@@ -116,8 +120,10 @@ public class EditorPage extends Page{
     bar.setBounds(6, 54, WINDOW_WIDTH, 40);
     bar.setOpaque(false);
     
-    bar.add(new EmptyButton(this, "", "").getBar(), "default");
+    bar.add(buttonGroups[2][0].getBar(), "default");
     bar.add(buttonGroups[2][1].getBar(), "setCanvasSize");
+    bar.add(buttonGroups[2][2].getBar(), "addImage");
+    bar.add(buttonGroups[2][3].getBar(), "addTextBox");
 
     return bar;
   }
@@ -132,6 +138,40 @@ public class EditorPage extends Page{
     panel.setLayout(null);
     panel.setBounds(10, TOOLBAR_HEIGHT, CANVAS_BG_WIDTH, CANVAS_BG_HEIGHT);
     panel.setBackground(Color.WHITE);
+
+    panel.addMouseListener(new MouseAdapter(){
+      @Override
+      public void mousePressed(MouseEvent me){
+        canvasLastX = canvasX;
+        canvasLastY = canvasY;
+        canvasMousePressX = me.getX();
+        canvasMousePressY = me.getY();
+      }
+      @Override
+      public void mouseReleased(MouseEvent me){
+        switch (paramBarCurrentPage){
+          case "default": case "addImage": case "addTextBox":
+            settingBox(template.whichObjectClicked(me.getX()-canvasX, me.getY()-canvasY));
+            break;
+        }
+      }
+    });
+    panel.addMouseMotionListener(new MouseMotionAdapter(){
+      @Override
+      public void mouseDragged(MouseEvent me){
+        switch (paramBarCurrentPage){
+          case "setCanvasSize":
+            int moveX = me.getX()-canvasMousePressX;
+            int moveY = me.getY()-canvasMousePressY;
+            canvasX = keepInRange(canvasLastX+moveX, 0, CANVAS_BG_WIDTH-canvasWidth);
+            canvasY = keepInRange(canvasLastY+moveY, 0, CANVAS_BG_HEIGHT-canvasHeight);
+
+            dragBorder.setButtonLocation(canvasX, canvasY, canvasWidth, canvasHeight);
+            redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
+            break;
+        }
+      }
+    });
 
     return panel;
   }
@@ -148,10 +188,10 @@ public class EditorPage extends Page{
   private void redrawTemplate(){
     if (templateLayer != null) remove(templateLayer);
     add(templateLayer = template.getTemplateLayer(10+canvasX, TOOLBAR_HEIGHT+canvasY), Integer.valueOf(1));
-    redrawCanvasCover();
+    redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
   }
 
-  public void redrawCanvasCover(){
+  public void redrawCanvasCover(int x, int y, int w, int h){
     if (canvasCover != null) remove(canvasCover);
 
     JPanel cover = new JPanel(){
@@ -160,10 +200,10 @@ public class EditorPage extends Page{
         Graphics2D g2d = (Graphics2D) g;
         
         g2d.setColor(new Color(0, 0, 0, 180));
-        g2d.fillRect(0, 0, getWidth(), canvasY);
-        g2d.fillRect(0, canvasY, canvasX, canvasHeight);
-        g2d.fillRect(canvasX+canvasWidth, canvasY, getWidth(), canvasHeight);
-        g2d.fillRect(0, canvasY+canvasHeight, getWidth(), getHeight());
+        g2d.fillRect(0, 0, getWidth(), y);
+        g2d.fillRect(0, y, x, h);
+        g2d.fillRect(x+w, y, getWidth(), h);
+        g2d.fillRect(0, y+h, getWidth(), getHeight());
 
         super.paintComponent(g2d);
       }
@@ -259,13 +299,17 @@ public class EditorPage extends Page{
 
           switch (paramBarCurrentPage){
             case "setCanvasSize":
+              template.updateRect(x-canvasX, y-canvasY, w, h);
+
               canvasX = x;
               canvasY = y;
               canvasWidth = w;
               canvasHeight = h;
+
               buttonGroups[2][1].whenClick();
               break;
           }
+          redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
         }
       });
       return button;
@@ -301,17 +345,36 @@ public class EditorPage extends Page{
       calcButtonLocation();
     }
   }
+  
   public void setDefaultButtonClick(){
     if (dragBorder == null) return;
+
     setBarPage("default");
     dragBorder.setVisible(false);
   }
   public void setCanvasSizeButtonClick(){
     dragBorder.setButtonLocation(canvasX, canvasY, canvasWidth, canvasHeight);
+
+    setBarPage("setCanvasSize");
+    dragBorder.setVisible(true);
+  }
+  public void settingBox(TemplateObject obj){
+    dragBorder.setButtonLocation(canvasX+obj.x, canvasY+obj.y, obj.w, obj.h);
+    objectSelected = obj;
+
+    switch (obj.type){
+      case "text":
+        setBarPage("addTextBox");
+        break;
+      case "image":
+        setBarPage("addImage");
+        break;
+    }
     dragBorder.setVisible(true);
   }
 
   public Template getTemplate(){return template;}
+  public TemplateObject getObjectSelected(){return objectSelected;}
   public int getCanvasX(){return canvasX;}
   public int getCanvasY(){return canvasY;}
   public int getCanvasWidth(){return canvasWidth;}
@@ -325,10 +388,10 @@ public class EditorPage extends Page{
 
   public void setCanvasWidth(int width){
     canvasWidth = keepInRange(width, MIN_CANVAS_WIDTH, CANVAS_BG_WIDTH-canvasX);
-    redrawCanvasCover();
+    redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
   }
   public void setCanvasHeight(int height){
     canvasHeight = keepInRange(height, MIN_CANVAS_WIDTH, CANVAS_BG_HEIGHT-canvasY);
-    redrawCanvasCover();
+    redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
   }
 }

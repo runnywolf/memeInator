@@ -20,11 +20,13 @@ import javax.swing.JOptionPane;
 import main.page.EditorPage;
 
 public class Template{
+  private EditorPage page;
   private Font font;
   private int width, height;
   private ArrayList<TemplateObject> objList = new ArrayList<>();
 
   public Template(EditorPage page, String templatePath){
+    this.page = page;
     if (templatePath == null){
       width = 500;
       height = 500;
@@ -114,6 +116,31 @@ public class Template{
         JOptionPane.showMessageDialog(null, "圖片存檔失敗", "錯誤", JOptionPane.WARNING_MESSAGE);
       }
     }
+  }
+
+  public void updateRect(int moveX, int moveY, int w, int h){
+    for (TemplateObject obj: objList){
+      obj.x -= moveX;
+      obj.y -= moveY;
+    }
+    width = w;
+    height = h;
+  }
+
+  public TemplateObject whichObjectClicked(int x, int y){
+    for (int i = objList.size()-1; i >= 0; i--){
+      TemplateObject obj = objList.get(i);
+      if (x >= obj.x && x <= obj.x+obj.w && y >= obj.y && y <= obj.y+obj.h) return objList.get(i);
+    }
+    return null;
+  }
+
+  public void addTextBox(){
+    
+  }
+
+  public void addImage(){
+
   }
 
   public int getWidth(){return width;}

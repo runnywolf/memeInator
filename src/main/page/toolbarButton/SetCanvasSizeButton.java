@@ -22,7 +22,6 @@ public class SetCanvasSizeButton extends EmptyButton{
       public void insertUpdate(DocumentEvent e){whenInputChange();}
       public void removeUpdate(DocumentEvent e){whenInputChange();}
     });
-
     heightTextField.getDocument().addDocumentListener(new DocumentListener(){
       public void changedUpdate(DocumentEvent e){whenInputChange();}
       public void insertUpdate(DocumentEvent e){whenInputChange();}
@@ -46,7 +45,6 @@ public class SetCanvasSizeButton extends EmptyButton{
   
   @Override
   public void whenClick(){
-    page.setBarPage("setCanvasSize");
     isInputValueSetting = true;
     widthTextField.setText(String.valueOf(page.getCanvasWidth()));
     heightTextField.setText(String.valueOf(page.getCanvasHeight()));
