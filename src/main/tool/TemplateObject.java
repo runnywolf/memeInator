@@ -3,6 +3,7 @@ package main.tool;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -72,5 +73,26 @@ public class TemplateObject{
         return String.format("type=image string=%s x=%d y=%d scale=%.3f", text, x, y, imageScale);
     }
     return null;
+  }
+
+  public void setText(String newText){
+    text = newText;
+    box.setText(text);
+  }
+  public void setRect(int x, int y, int w, int h){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    switch (type){
+      case "text":
+        box.setBounds(x, y, w, h);
+        break;
+      case "image":
+        box.setBounds(x, y, w, h);
+        Image scaleImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        box.setIcon(new ImageIcon(scaleImage));
+        break;
+    }
   }
 }

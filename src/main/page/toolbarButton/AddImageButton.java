@@ -52,4 +52,9 @@ public class AddImageButton extends EmptyButton{
     TemplateObject objectSelected = page.getObjectSelected();
 
   }
+
+  public void setParam(int width, int height){
+    widthTextField.setText(String.valueOf(width));
+    heightTextField.setText(String.valueOf(height));
+  }
 }

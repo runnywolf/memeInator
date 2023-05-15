@@ -1,5 +1,5 @@
-635 291
-type=image string=img1.png x=149 y=-194 scale=0.800
-type=text string=<文字方塊1> x=439 y=-132 w=120 h=30
-type=text string=<文字方塊2> x=439 y=30 w=120 h=30
-type=text string=<文字方塊3> x=439 y=192 w=120 h=30
+486 485
+type=image string=img1.png x=0 y=0 scale=0.800
+type=text string=<文字方塊1> x=279 y=21 w=192 h=73
+type=text string=<文字方塊2> x=264 y=154 w=185 h=127
+type=text string=<文字方塊3> x=290 y=386 w=120 h=30

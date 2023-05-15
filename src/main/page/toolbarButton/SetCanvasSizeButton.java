@@ -55,10 +55,9 @@ public class SetCanvasSizeButton extends EmptyButton{
   private void whenInputChange(){
     if (isInputValueSetting) return;
     try{
-      page.setCanvasWidth(Integer.valueOf(widthTextField.getText()));
-    }catch (Exception ex){}
-    try{
-      page.setCanvasHeight(Integer.valueOf(heightTextField.getText()));
+      int width = Integer.valueOf(widthTextField.getText());
+      int height = Integer.valueOf(heightTextField.getText());
+      page.setCanvasSize(width, height);
     }catch (Exception ex){}
     page.setCanvasSizeButtonClick();
   }

@@ -59,7 +59,7 @@ public class Template{
     JLayeredPane template = new JLayeredPane();
     template.setOpaque(false);
     template.setLayout(null);
-    template.setBounds(x, y, width, height);
+    template.setBounds(x, y, 1000, 2000);
     for (int i = 0; i < objList.size(); i++) template.add(objList.get(i).box, Integer.valueOf(i));
     return template;
   }

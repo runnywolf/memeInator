@@ -61,7 +61,18 @@ public class AddTextBoxButton extends EmptyButton{
   }
 
   private void whenInputChange(){
-    TemplateObject objectSelected = page.getObjectSelected();
+    TemplateObject obj = page.getObjectSelected();
+    obj.setText(textTextField.getText());
+    try{
+      int width = Integer.valueOf(widthTextField.getText());
+      int height = Integer.valueOf(heightTextField.getText());
+      page.setTemplateObjectRect(obj, obj.x, obj.y, width, height);
+    }catch (Exception e){}
+  }
 
+  public void setParam(String text, int width, int height){
+    textTextField.setText(text);
+    widthTextField.setText(String.valueOf(width));
+    heightTextField.setText(String.valueOf(height));
   }
 }

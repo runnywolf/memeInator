@@ -22,13 +22,15 @@ import main.tool.TemplateObject;
 public class EditorPage extends Page{
   private MemeInator frame;
   private EmptyButton[][] buttonGroups;
+  private AddImageButton addImageButton;
+  private AddTextBoxButton addTextBoxButton;
   private String paramBarCurrentPage;
   private JPanel paramBar;
   private final int TOOLBAR_HEIGHT = 106;
   private final int CANVAS_BG_WIDTH = 1044;
   private final int CANVAS_BG_HEIGHT = 565;
-  private int canvasLastX, canvasLastY;
-  private int canvasMousePressX, canvasMousePressY;
+  private int lastX, lastY;
+  private int mousePressX, mousePressY;
   private Template template;
   private JLayeredPane templateLayer;
   private TemplateObject objectSelected;
@@ -42,6 +44,8 @@ public class EditorPage extends Page{
     super(frame);
     this.frame = frame;
     
+    addImageButton = new AddImageButton(this, "新增圖片", "img/toolbarIcon/addImage.png");
+    addTextBoxButton = new AddTextBoxButton(this, "新增文字方塊", "img/toolbarIcon/addTextBox.png");
     EmptyButton[][] groups = {
       {
         new HomeButton(this, "返回主選單", "img/toolbarIcon/home.png")
@@ -56,8 +60,8 @@ public class EditorPage extends Page{
       {
         new DefaultButton(this, "預設選取模式", "img/toolbarIcon/default.png"),
         new SetCanvasSizeButton(this, "設定畫布範圍", "img/toolbarIcon/setCanvasSize.png"),
-        new AddImageButton(this, "新增圖片", "img/toolbarIcon/addImage.png"),
-        new AddTextBoxButton(this, "新增文字方塊", "img/toolbarIcon/addTextBox.png")
+        addImageButton,
+        addTextBoxButton
       }
     }; // 按鈕排版
     buttonGroups = groups;
@@ -142,16 +146,25 @@ public class EditorPage extends Page{
     panel.addMouseListener(new MouseAdapter(){
       @Override
       public void mousePressed(MouseEvent me){
-        canvasLastX = canvasX;
-        canvasLastY = canvasY;
-        canvasMousePressX = me.getX();
-        canvasMousePressY = me.getY();
+        mousePressX = me.getX();
+        mousePressY = me.getY();
+        switch (paramBarCurrentPage){
+          case "default": case "addImage": case "addTextBox":
+            canvasClickObject(me.getX(), me.getY());
+            lastX = objectSelected.x;
+            lastY = objectSelected.y;
+            break;
+          case "setCanvasSize":
+            lastX = canvasX;
+            lastY = canvasY;
+            break;
+        }
       }
       @Override
       public void mouseReleased(MouseEvent me){
         switch (paramBarCurrentPage){
           case "default": case "addImage": case "addTextBox":
-            settingBox(template.whichObjectClicked(me.getX()-canvasX, me.getY()-canvasY));
+            canvasClickObject(me.getX(), me.getY());
             break;
         }
       }
@@ -159,12 +172,17 @@ public class EditorPage extends Page{
     panel.addMouseMotionListener(new MouseMotionAdapter(){
       @Override
       public void mouseDragged(MouseEvent me){
+        int moveX = me.getX()-mousePressX;
+        int moveY = me.getY()-mousePressY;
+
         switch (paramBarCurrentPage){
+          case "default": case "addImage": case "addTextBox":
+            objectSelected.setRect(lastX+moveX, lastY+moveY, objectSelected.w, objectSelected.h);
+            dragBorder.setButtonLocation(canvasX+lastX+moveX, canvasY+lastY+moveY, objectSelected.w, objectSelected.h);
+            break;
           case "setCanvasSize":
-            int moveX = me.getX()-canvasMousePressX;
-            int moveY = me.getY()-canvasMousePressY;
-            canvasX = keepInRange(canvasLastX+moveX, 0, CANVAS_BG_WIDTH-canvasWidth);
-            canvasY = keepInRange(canvasLastY+moveY, 0, CANVAS_BG_HEIGHT-canvasHeight);
+            canvasX = keepInRange(lastX+moveX, 0, CANVAS_BG_WIDTH-canvasWidth);
+            canvasY = keepInRange(lastY+moveY, 0, CANVAS_BG_HEIGHT-canvasHeight);
 
             dragBorder.setButtonLocation(canvasX, canvasY, canvasWidth, canvasHeight);
             redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
@@ -175,7 +193,30 @@ public class EditorPage extends Page{
 
     return panel;
   }
+  private void canvasClickObject(int clickX, int clickY){
+    TemplateObject obj = template.whichObjectClicked(clickX-canvasX, clickY-canvasY);
+    if (obj == null) return;
+    objectSelected = obj;
 
+    switch (obj.type){
+      case "text":
+        addTextBoxButton.setParam(obj.text, obj.w, obj.h);
+        setBarPage("addTextBox");
+        break;
+      case "image":
+        addImageButton.setParam(obj.w, obj.h);
+        setBarPage("addImage");
+        break;
+    }
+    dragBorder.setButtonLocation(canvasX+obj.x, canvasY+obj.y, obj.w, obj.h);
+    dragBorder.setVisible(true);
+  }
+
+  private void redrawTemplate(){
+    if (templateLayer != null) remove(templateLayer);
+    add(templateLayer = template.getTemplateLayer(10+canvasX, TOOLBAR_HEIGHT+canvasY), Integer.valueOf(1));
+    redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
+  }
   public void importTemplate(String templatePath){
     template = new Template(this, templatePath);
     canvasWidth = template.getWidth();
@@ -184,11 +225,6 @@ public class EditorPage extends Page{
     canvasY = (CANVAS_BG_HEIGHT-canvasHeight)/2;
     redrawTemplate();
     setDefaultButtonClick();
-  }
-  private void redrawTemplate(){
-    if (templateLayer != null) remove(templateLayer);
-    add(templateLayer = template.getTemplateLayer(10+canvasX, TOOLBAR_HEIGHT+canvasY), Integer.valueOf(1));
-    redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
   }
 
   public void redrawCanvasCover(int x, int y, int w, int h){
@@ -298,6 +334,17 @@ public class EditorPage extends Page{
           calcButtonLocation();
 
           switch (paramBarCurrentPage){
+            case "default":
+              setTemplateObjectRect(objectSelected, x-canvasX, y-canvasY, w, h);
+              break;
+            case "addImage":
+              setTemplateObjectRect(objectSelected, x-canvasX, y-canvasY, w, h);
+              addImageButton.setParam(objectSelected.w, objectSelected.h);
+              break;
+            case "addTextBox":
+              setTemplateObjectRect(objectSelected, x-canvasX, y-canvasY, w, h);
+              addTextBoxButton.setParam(objectSelected.text, objectSelected.w, objectSelected.h);
+              break;
             case "setCanvasSize":
               template.updateRect(x-canvasX, y-canvasY, w, h);
 
@@ -307,9 +354,9 @@ public class EditorPage extends Page{
               canvasHeight = h;
 
               buttonGroups[2][1].whenClick();
+              redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
               break;
           }
-          redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
         }
       });
       return button;
@@ -358,20 +405,6 @@ public class EditorPage extends Page{
     setBarPage("setCanvasSize");
     dragBorder.setVisible(true);
   }
-  public void settingBox(TemplateObject obj){
-    dragBorder.setButtonLocation(canvasX+obj.x, canvasY+obj.y, obj.w, obj.h);
-    objectSelected = obj;
-
-    switch (obj.type){
-      case "text":
-        setBarPage("addTextBox");
-        break;
-      case "image":
-        setBarPage("addImage");
-        break;
-    }
-    dragBorder.setVisible(true);
-  }
 
   public Template getTemplate(){return template;}
   public TemplateObject getObjectSelected(){return objectSelected;}
@@ -386,12 +419,15 @@ public class EditorPage extends Page{
     return new Rectangle(7+windowX+10+canvasX, 31+windowY+TOOLBAR_HEIGHT+canvasY, canvasWidth, canvasHeight);
   }
 
-  public void setCanvasWidth(int width){
+  public void setCanvasSize(int width, int height){
     canvasWidth = keepInRange(width, MIN_CANVAS_WIDTH, CANVAS_BG_WIDTH-canvasX);
-    redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
-  }
-  public void setCanvasHeight(int height){
     canvasHeight = keepInRange(height, MIN_CANVAS_WIDTH, CANVAS_BG_HEIGHT-canvasY);
     redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
+  }
+  public void setTemplateObjectRect(TemplateObject obj, int x, int y, int width, int height){
+    int w = keepInRange(width, MIN_CANVAS_WIDTH, CANVAS_BG_WIDTH-(canvasX+obj.x));
+    int h = keepInRange(height, MIN_CANVAS_HEIGHT, CANVAS_BG_HEIGHT-(canvasY+obj.y));
+    obj.setRect(x, y, w, h);
+    dragBorder.setButtonLocation(canvasX+obj.x, canvasY+obj.y, obj.w, obj.h);
   }
 }
