@@ -15,7 +15,7 @@ import main.page.*;
 import main.external.NewFont;
 
 public class MemeInator extends JFrame{
-  private final String VERSION = "v0.dev-17";
+  private final String VERSION = "v0.dev-30";
   private final int WINDOW_WIDTH = 1080;
   private final int WINDOW_HEIGHT = 720;
   private final Color APP_BG_COLOR = new Color(40, 40, 40);
@@ -54,7 +54,7 @@ public class MemeInator extends JFrame{
 
     app = new JPanel(new CardLayout());
     app.add(new StartPage(this), "StartPage");
-    app.add(new EditorPage(this), "SearchPage");
+    app.add(new SearchPage(this), "SearchPage");
     app.add(new EditorPage(this), "EditorPage");
 
     setContentPane(app);

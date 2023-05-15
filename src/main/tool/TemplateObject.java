@@ -13,7 +13,6 @@ public class TemplateObject{
   public String text;
   public JLabel box;
   public int x, y, w, h;
-  public double imageScale;
   public Image image;
 
   public TemplateObject(String templatePath, String objectString, Font font){
@@ -39,9 +38,6 @@ public class TemplateObject{
         case "h":
           h = Integer.valueOf(kvSplit[1]);
           break;
-        case "scale":
-          imageScale = Double.valueOf(kvSplit[1]);
-          break;
       }
     }
     // read and encoding template format file
@@ -55,8 +51,6 @@ public class TemplateObject{
         break;
       case "image":
         image = new ImageIcon(templatePath+"/"+text).getImage();
-        w = (int)(image.getWidth(null)*imageScale);
-        h = (int)(image.getHeight(null)*imageScale);
         Image scaleImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
         box = new JLabel(new ImageIcon(scaleImage));
         box.setBounds(x, y, w, h);
@@ -70,7 +64,7 @@ public class TemplateObject{
       case "text":
         return String.format("type=text string=%s x=%d y=%d w=%d h=%d", text, x, y, w, h);
       case "image":
-        return String.format("type=image string=%s x=%d y=%d scale=%.3f", text, x, y, imageScale);
+        return String.format("type=image string=%s x=%d y=%d w=%d h=%d", text, x, y, w, h);
     }
     return null;
   }
@@ -81,8 +75,6 @@ public class TemplateObject{
   }
   public void setImage(String imagePath){
     image = new ImageIcon(imagePath).getImage();
-    w = (int)(image.getWidth(null)*imageScale);
-    h = (int)(image.getHeight(null)*imageScale);
     Image scaleImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
     box.setBounds(x, y, w, h);
     box.setIcon(new ImageIcon(scaleImage));

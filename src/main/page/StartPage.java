@@ -41,6 +41,7 @@ public class StartPage extends Page{
 
     BetterButton templateStartButton = new BetterButton("選擇想要的迷因模板", 32, null, null, buttonGap, null);
     templateStartButton.whenHover(null, null, null, null);
+    templateStartButton.whenClickGoto("SearchPage");
     twoButton.add(templateStartButton);
 
     return twoButton;
