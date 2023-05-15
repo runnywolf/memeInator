@@ -3,10 +3,8 @@ package main.page;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 import javax.swing.event.*;
-
 import main.MemeInator;
 import main.external.NewFont;
 
@@ -18,8 +16,8 @@ public class SearchPage extends Page{
         super(frame);
 
         add(makeLabel(), Integer.valueOf(0));
-        add(makePromptInput(), Integer.valueOf(0));
-        add(makeResults(), Integer.valueOf(0));
+        /*add(makePromptInput(), Integer.valueOf(0));
+        add(makeResults(), Integer.valueOf(0));*/
 
         /*MouseHandler mouseHandler = new MouseHandler();
         Results.addMouseListener(mouseHandler);
@@ -38,19 +36,23 @@ public class SearchPage extends Page{
     }
 
     private JLabel makeLabel(){
-        JLabel Label = new JLabel();
-        Label.setText("請輸入關鍵字：");
-        Label.setBounds(60,30,100,50);
+        JLabel Label = new BetterLabel("請輸入關鍵字：", 24, null, false, SwingConstants.LEFT, appBgColor);
+        Label.setBounds(60,30,200,50);
         return Label;
     }
 
+    /*這裡需要一個 BetterJTextField() */
     private JTextField makePromptInput(){
+        /*
+        如果直接用 JTextField PromptInput = new JTextField(); 會出java.lang.IllegalArgumentException: adding container's parent to itself
+        */
         JTextField PromptInput = new JTextField();
         PromptInput.setBounds(160,30,300,50);
         PromptInput.add(new JScrollPane(PromptInput));
         return PromptInput;
     }
 
+    /*這裡需要一個 BetterJList() */
     private JList<String> makeResults(){
         JList<String> Results = new JList<>();
         Results.setFont(new Font("Serif", Font.PLAIN, 24));
@@ -58,7 +60,8 @@ public class SearchPage extends Page{
         return Results;
     }
 
-    /*private ArrayList<String> GetLabel() {
+    /*放置標籤的 ArrayList */
+    private ArrayList<String> GetLabel() {
         ArrayList<String> OriginalTags = new ArrayList<>();
         OriginalTags.add("標籤一");
         OriginalTags.add("標籤二");
@@ -66,7 +69,7 @@ public class SearchPage extends Page{
         return OriginalTags;
     }
 
-    private void binddata() {
+    /*private void binddata() {
         GetLabel().stream().forEach((OriginalTags) -> {
             defaultListModel.addElement(OriginalTags);
         }); 
@@ -92,6 +95,4 @@ public class SearchPage extends Page{
 
     private class KeyHandler extends KeyAdapter {
     }*/
-
-    
 }
