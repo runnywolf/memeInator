@@ -79,6 +79,14 @@ public class TemplateObject{
     text = newText;
     box.setText(text);
   }
+  public void setImage(String imagePath){
+    image = new ImageIcon(imagePath).getImage();
+    w = (int)(image.getWidth(null)*imageScale);
+    h = (int)(image.getHeight(null)*imageScale);
+    Image scaleImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+    box.setBounds(x, y, w, h);
+    box.setIcon(new ImageIcon(scaleImage));
+  }
   public void setRect(int x, int y, int w, int h){
     this.x = x;
     this.y = y;

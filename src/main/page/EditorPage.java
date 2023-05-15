@@ -150,21 +150,13 @@ public class EditorPage extends Page{
         mousePressY = me.getY();
         switch (paramBarCurrentPage){
           case "default": case "addImage": case "addTextBox":
-            canvasClickObject(me.getX(), me.getY());
+            canvasClickObject(template.whichObjectClicked(me.getX()-canvasX, me.getY()-canvasY));
             lastX = objectSelected.x;
             lastY = objectSelected.y;
             break;
           case "setCanvasSize":
             lastX = canvasX;
             lastY = canvasY;
-            break;
-        }
-      }
-      @Override
-      public void mouseReleased(MouseEvent me){
-        switch (paramBarCurrentPage){
-          case "default": case "addImage": case "addTextBox":
-            canvasClickObject(me.getX(), me.getY());
             break;
         }
       }
@@ -193,8 +185,7 @@ public class EditorPage extends Page{
 
     return panel;
   }
-  private void canvasClickObject(int clickX, int clickY){
-    TemplateObject obj = template.whichObjectClicked(clickX-canvasX, clickY-canvasY);
+  public void canvasClickObject(TemplateObject obj){
     if (obj == null) return;
     objectSelected = obj;
 
@@ -208,6 +199,7 @@ public class EditorPage extends Page{
         setBarPage("addImage");
         break;
     }
+    redrawTemplate();
     dragBorder.setButtonLocation(canvasX+obj.x, canvasY+obj.y, obj.w, obj.h);
     dragBorder.setVisible(true);
   }

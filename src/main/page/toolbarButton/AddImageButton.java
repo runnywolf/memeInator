@@ -6,6 +6,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import main.external.ChooseFolder;
 import main.page.EditorPage;
 import main.tool.TemplateObject;
 
@@ -45,12 +46,18 @@ public class AddImageButton extends EmptyButton{
 
   @Override
   public void whenClick(){
-    
+    page.setDefaultButtonClick();
+    String imagePath = new ChooseFolder().getPath("img", "image");
+    if (imagePath != null) page.getTemplate().addImage(imagePath);
   }
 
   private void whenInputChange(){
-    TemplateObject objectSelected = page.getObjectSelected();
-
+    TemplateObject obj = page.getObjectSelected();
+    try{
+      int width = Integer.valueOf(widthTextField.getText());
+      int height = Integer.valueOf(heightTextField.getText());
+      page.setTemplateObjectRect(obj, obj.x, obj.y, width, height);
+    }catch (Exception e){}
   }
 
   public void setParam(int width, int height){

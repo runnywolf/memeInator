@@ -57,7 +57,8 @@ public class AddTextBoxButton extends EmptyButton{
 
   @Override
   public void whenClick(){
-    
+    page.setDefaultButtonClick();
+    page.getTemplate().addTextBox();
   }
 
   private void whenInputChange(){

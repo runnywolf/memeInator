@@ -1,5 +1,6 @@
-486 485
-type=image string=img1.png x=0 y=0 scale=0.800
-type=text string=<文字方塊1> x=279 y=21 w=192 h=73
-type=text string=<文字方塊2> x=264 y=154 w=185 h=127
-type=text string=<文字方塊3> x=290 y=386 w=120 h=30
+500 500
+type=image string=img1.png x=13 y=29 scale=1.000
+type=image string=img2.png x=188 y=271 scale=1.000
+type=text string=<新文字方塊> x=-20 y=177 w=200 h=100
+type=text string=<新文字方塊> x=-2 y=93 w=200 h=100
+type=text string=<新文字方塊> x=63 y=305 w=140 h=84
