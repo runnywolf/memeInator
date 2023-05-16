@@ -146,6 +146,8 @@ public class EditorPage extends Page{
     panel.addMouseListener(new MouseAdapter(){
       @Override
       public void mousePressed(MouseEvent me){
+        if (objectSelected == null) return;
+
         mousePressX = me.getX();
         mousePressY = me.getY();
         switch (paramBarCurrentPage){
@@ -164,6 +166,8 @@ public class EditorPage extends Page{
     panel.addMouseMotionListener(new MouseMotionAdapter(){
       @Override
       public void mouseDragged(MouseEvent me){
+        if (objectSelected == null) return;
+
         int moveX = me.getX()-mousePressX;
         int moveY = me.getY()-mousePressY;
 

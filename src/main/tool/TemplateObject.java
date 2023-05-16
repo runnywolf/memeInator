@@ -41,7 +41,7 @@ public class TemplateObject{
       }
     }
     // read and encoding template format file
-
+  
     switch (type){
       case "text":
         box = new JLabel(text, SwingConstants.CENTER);
@@ -50,7 +50,8 @@ public class TemplateObject{
         box.setBounds(x, y, w, h);
         break;
       case "image":
-        image = new ImageIcon(templatePath+"/"+text).getImage();
+        if (!text.contains("\\")) text = templatePath+"/"+text;
+        image = new ImageIcon(text).getImage();
         Image scaleImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
         box = new JLabel(new ImageIcon(scaleImage));
         box.setBounds(x, y, w, h);
@@ -72,12 +73,6 @@ public class TemplateObject{
   public void setText(String newText){
     text = newText;
     box.setText(text);
-  }
-  public void setImage(String imagePath){
-    image = new ImageIcon(imagePath).getImage();
-    Image scaleImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-    box.setBounds(x, y, w, h);
-    box.setIcon(new ImageIcon(scaleImage));
   }
   public void setRect(int x, int y, int w, int h){
     this.x = x;

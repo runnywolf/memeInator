@@ -12,8 +12,8 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
@@ -141,8 +141,7 @@ public class Template{
   }
 
   public void addImage(String imagePath){
-    TemplateObject newObject = new TemplateObject(null, "type=image string="+imagePath+" x=100 y=100 scale=1", font);
-    newObject.setImage(imagePath);
+    TemplateObject newObject = new TemplateObject(null, "type=image string="+imagePath+" x=100 y=100 w=100 h=100", font);
     objList.add(newObject);
     page.canvasClickObject(newObject);
   }
