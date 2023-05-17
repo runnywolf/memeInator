@@ -1,5 +1,5 @@
 486 485
-type=image string=main.png x=0 y=0 w=486 h=485
-type=text string=<文字方塊1> x=290 y=62 w=120 h=30
-type=text string=<文字方塊2> x=290 y=224 w=120 h=30
-type=text string=<文字方塊3> x=290 y=386 w=120 h=30
+type=image string=img1.png x=0 y=0 w=486 h=485
+type=text string=看題目說明解題 x=274 y=62 w=155 h=30
+type=text string=只看測資解題 x=290 y=224 w=120 h=30
+type=text string=只看題目解題 x=290 y=386 w=120 h=30

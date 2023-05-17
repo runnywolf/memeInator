@@ -1,5 +1,0 @@
-486 485
-type=image string=img1.png x=0 y=0 w=486 h=485
-type=text string=<文字方塊1> x=290 y=62 w=120 h=30
-type=text string=<文字方塊2> x=290 y=224 w=120 h=30
-type=text string=<文字方塊3> x=290 y=386 w=120 h=30
