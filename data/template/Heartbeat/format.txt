@@ -1,0 +1,5 @@
+500 500
+type=image string=img1.png x=-1 y=2 w=630 h=530
+type=text string=我柔我女友的奶 x=58 y=84 w=200 h=100
+type=text string=女友摸我的屌 x=58 y=238 w=200 h=100
+type=text string=我摸我女友的屌 x=63 y=408 w=200 h=100

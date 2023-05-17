@@ -1,0 +1,3 @@
+500 500
+type=image string=img1.png x=0 y=-2 w=702 h=533
+type=text string=只剩下十分鐘但還有半張考卷 x=128 y=375 w=379 h=76

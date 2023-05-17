@@ -1,0 +1,5 @@
+500 500
+type=image string=img1.png x=-1 y=0 w=363 h=533
+type=text string=擺脫世俗卡 x=5 y=-1 w=205 h=98
+type=text string=當你進入ZONE狀態時 x=-19 y=389 w=315 h=100
+type=text string=打這張就對了 x=3 y=414 w=200 h=100

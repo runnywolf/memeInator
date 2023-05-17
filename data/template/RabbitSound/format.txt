@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=-2 y=1 w=240 h=240
+type=text string=兔子發出理智的聲音 x=6 y=161 w=241 h=100
+type=text string=幹他 x=-61 y=-4 w=200 h=100

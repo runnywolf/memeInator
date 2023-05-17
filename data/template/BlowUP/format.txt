@@ -1,0 +1,6 @@
+500 500
+type=image string=img1.png x=0 y=1 w=265 h=210
+type=text string=炸！ x=122 y=-20 w=170 h=92
+type=text string=管他的！ x=-5 y=-8 w=112 h=67
+type=text string=炸就對了 x=-35 y=74 w=152 h=64
+type=text string=及格就好 x=-29 y=126 w=179 h=82

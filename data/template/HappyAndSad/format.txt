@@ -1,0 +1,6 @@
+500 500
+type=image string=img1.png x=0 y=0 w=469 h=421
+type=text string=修爽課的同學 x=236 y=72 w=200 h=100
+type=text string=已經被疲勞轟炸 x=240 y=238 w=200 h=100
+type=text string=每天都要考試 x=241 y=262 w=200 h=100
+type=text string=還要忍受其他壓力的同學 x=217 y=287 w=244 h=100

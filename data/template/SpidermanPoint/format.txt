@@ -1,0 +1,5 @@
+500 500
+type=image string=img1.png x=0 y=0 w=548 h=436
+type=text string=主題一 x=33 y=85 w=200 h=100
+type=text string=主題二 x=200 y=12 w=200 h=100
+type=text string=主題三 x=344 y=78 w=200 h=100

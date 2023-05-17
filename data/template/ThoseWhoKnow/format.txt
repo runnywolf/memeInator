@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=-1 y=0 w=773 h=412
+type=text string=老師教的 x=215 y=-17 w=200 h=100
+type=text string=學生聽進去的 x=611 y=-16 w=200 h=100

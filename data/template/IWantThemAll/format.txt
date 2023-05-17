@@ -1,0 +1,2 @@
+500 500
+type=image string=img1.png x=-1 y=0 w=627 h=468

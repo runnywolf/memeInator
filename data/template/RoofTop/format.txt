@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=1 y=-1 w=573 h=533
+type=text string=教授？ x=281 y=32 w=200 h=100
+type=text string=我報告做不出來 x=309 y=216 w=200 h=100

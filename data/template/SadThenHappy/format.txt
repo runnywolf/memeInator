@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=0 y=0 w=526 h=533
+type=text string=要上機考完全沒準備 x=28 y=80 w=200 h=100
+type=text string=教授決定下禮拜再考 x=33 y=348 w=200 h=100

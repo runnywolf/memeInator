@@ -1,0 +1,3 @@
+500 500
+type=image string=img1.png x=0 y=0 w=666 h=375
+type=text string=KONO DIO DA! x=212 y=304 w=200 h=100

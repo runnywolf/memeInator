@@ -1,0 +1,5 @@
+500 500
+type=image string=img1.png x=0 y=0 w=372 h=533
+type=text string=你讀書是為了畢業找工作 x=64 y=-2 w=248 h=100
+type=text string=我讀書是為了及格 x=82 y=415 w=200 h=100
+type=text string=我們不一樣 x=71 y=457 w=200 h=100

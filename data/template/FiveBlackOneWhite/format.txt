@@ -1,0 +1,8 @@
+500 500
+type=image string=img1.png x=0 y=-3 w=640 h=421
+type=text string=我 x=267 y=218 w=200 h=100
+type=text string=壓力 x=-44 y=7 w=200 h=100
+type=text string=書 x=93 y=-30 w=200 h=100
+type=text string=成績 x=225 y=-7 w=200 h=100
+type=text string=同儕 x=356 y=-5 w=200 h=100
+type=text string=家人 x=439 y=-35 w=200 h=100

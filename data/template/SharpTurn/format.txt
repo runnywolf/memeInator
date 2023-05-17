@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=0 y=0 w=562 h=533
+type=text string=乖乖準備考試 x=131 y=22 w=200 h=100
+type=text string=臨時抱佛腳 x=243 y=68 w=200 h=100

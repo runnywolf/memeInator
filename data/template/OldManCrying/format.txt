@@ -1,0 +1,3 @@
+500 500
+type=image string=img1.png x=-3 y=-1 w=355 h=533
+type=text string=把拔我長大也想當工程師 x=112 y=27 w=235 h=52

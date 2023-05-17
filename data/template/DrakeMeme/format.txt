@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=-3 y=-1 w=772 h=434
+type=text string=晚上乖乖休息 x=470 y=70 w=200 h=100
+type=text string=不去上課白天睡覺 x=481 y=263 w=200 h=100

@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=-1 y=0 w=250 h=221
+type=text string=期末 x=-65 y=141 w=200 h=100
+type=text string=暑假 x=112 y=35 w=200 h=100

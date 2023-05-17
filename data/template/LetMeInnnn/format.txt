@@ -1,0 +1,3 @@
+500 500
+type=image string=img1.png x=0 y=0 w=500 h=500
+type=text string=忘記帶學生證 be like x=149 y=-20 w=200 h=100

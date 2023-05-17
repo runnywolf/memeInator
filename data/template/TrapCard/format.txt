@@ -1,0 +1,5 @@
+500 500
+type=image string=img1.png x=0 y=0 w=318 h=467
+type=text string=你是個好人 x=-8 y=-14 w=200 h=100
+type=text string=當你不知道該如何拒絕別人時 x=3 y=316 w=312 h=100
+type=text string=打這張就對了 x=-11 y=340 w=200 h=100

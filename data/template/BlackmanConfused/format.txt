@@ -1,0 +1,3 @@
+500 500
+type=image string=img1.png x=-1 y=0 w=770 h=533
+type=text string=下禮拜期末？？？ x=524 y=316 w=200 h=100

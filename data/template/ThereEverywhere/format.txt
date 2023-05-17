@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=0 y=0 w=772 h=524
+type=text string=看看大家 x=335 y=32 w=200 h=100
+type=text string=全部都是電神 x=540 y=346 w=200 h=100

@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=0 y=0 w=533 h=533
+type=text string=考卷第一題 x=299 y=72 w=200 h=100
+type=text string=第二題 x=296 y=352 w=200 h=100

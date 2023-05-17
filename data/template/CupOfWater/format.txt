@@ -1,0 +1,4 @@
+500 500
+type=image string=img1.png x=-4 y=1 w=533 h=533
+type=text string=工程師 x=324 y=36 w=200 h=100
+type=text string=這杯會溢位 x=337 y=400 w=200 h=100

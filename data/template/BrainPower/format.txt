@@ -1,0 +1,7 @@
+500 500
+type=image string=img1.png x=-1 y=1 w=313 h=533
+type=text string=上靠睡覺 x=-4 y=3 w=200 h=100
+type=text string=為接下來的課準備 x=-4 y=111 w=200 h=100
+type=text string=冥想平衡身心 x=-6 y=221 w=200 h=100
+type=text string=為了人類的福祉 x=-7 y=325 w=200 h=100
+type=text string=與在地靈魂聊天 x=-6 y=427 w=200 h=100
