@@ -12,20 +12,29 @@ import java.util.HashSet;
 import java.util.Set;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import main.MemeInator;
 
 public class SearchPage extends Page{
-	private ArrayList<String[]> templateTag;
+	private MemeInator frame;
+	private ArrayList<String[]> templateTagList;
 	private Set<String> tagSet;
 	private JTextField searchTextField;
 	private final int MAX_SEARCH_RESULT_N = 10;
@@ -33,10 +42,12 @@ public class SearchPage extends Page{
 	private Set<String> selectedTagSet;
 	private final int MAX_SELECT_TAG_N = 5;
 	private JPanel selectedTag;
+	private JScrollPane resultTemplatePane;
 
 	public SearchPage(MemeInator frame){
 		super(frame);
-		templateTag = new ArrayList<>();
+		this.frame = frame;
+		templateTagList = new ArrayList<>();
 		tagSet = new HashSet<>();
 		selectedTagSet = new HashSet<>();
 
@@ -62,7 +73,6 @@ public class SearchPage extends Page{
 			@Override
 			public void actionPerformed(ActionEvent e){
 				clearSearch();
-				removeAllTag();
 			}
 		});
 		backButtonPanel.add(homeButton);
@@ -143,26 +153,33 @@ public class SearchPage extends Page{
 		}
 
 		searchTagList = list;
-		add(searchTagList, Integer.valueOf(0));
+		add(searchTagList, Integer.valueOf(1));
 		repaint();
 	}
 	private void clearSearch(){
 		searchTextField.setText("");
 		redrawSearchTagList(new ArrayList<>());
+		removeAllTag();
+		redrawResultTemplate();
 	}
 	private void clickSearchTagList(String tag){
 		addTag(tag);
-		redrawSelectedTagList();
+		redrawResultTemplate();
 	}
 
 	private void addTag(String tag){
-		if (selectedTagSet.size() < MAX_SELECT_TAG_N) selectedTagSet.add(tag);
+		if (selectedTagSet.size() < MAX_SELECT_TAG_N){
+			selectedTagSet.add(tag);
+			redrawSelectedTagList();
+		}
 	}
 	private void removeTag(String tag){
 		selectedTagSet.remove(tag);
+		redrawSelectedTagList();
 	}
 	private void removeAllTag(){
 		selectedTagSet = new HashSet<>();
+		redrawSelectedTagList();
 	}
 
 	private void redrawSelectedTagList(){
@@ -188,12 +205,73 @@ public class SearchPage extends Page{
 		}
 
 		selectedTag = tags;
-		add(selectedTag, Integer.valueOf(0));
+		add(selectedTag, Integer.valueOf(1));
 		repaint();
 	}
 	private void clickTagButton(String tag){
 		removeTag(tag);
-		redrawSelectedTagList();
+		redrawResultTemplate();
+	}
+
+	private boolean isTemplateContainAllSelectedTag(String[] temp){
+		Set<String> check = new HashSet<>();
+		for (int i = 1; i < temp.length; i++) if (selectedTagSet.contains(temp[i])) check.add(temp[i]);
+		if (check.size() == selectedTagSet.size()) return true;
+		return false;
+	}
+	private JPanel makeResultTemplate(){
+		int tempCount = 0;
+
+		JPanel result = new JPanel();
+		result.setOpaque(true);
+		result.setBackground(appBgColor);
+		
+		result.setBorder(BorderFactory.createEmptyBorder(18, 264, 48, 20));
+		
+		for (String[] templateTag: templateTagList){
+			if (!isTemplateContainAllSelectedTag(templateTag)) continue;
+
+			BetterButton button = new BetterButton("", 16, null, null, 4, null);
+			button.whenHover(null, null, null, null);
+
+			Image meme = new ImageIcon("data/template/"+templateTag[0]+"/img1.png").getImage();
+			meme = meme.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+			button.setIcon(new ImageIcon(meme));
+
+			button.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e){
+					frame.getEditorPage().importTemplate("data/template/"+templateTag[0]);
+					changePage("EditorPage");
+				}
+			});
+			result.add(button);
+
+			tempCount++;
+		}
+
+		int row = (tempCount-1)/3+1;
+		result.setLayout(new GridLayout(row, 3, 6, 6));
+		result.setPreferredSize(new Dimension(700, 280*row));
+
+		return result;
+	}
+	private void redrawResultTemplate(){
+		if (resultTemplatePane != null) remove(resultTemplatePane);
+
+		resultTemplatePane = new JScrollPane(makeResultTemplate());
+
+		resultTemplatePane.setOpaque(true);
+		resultTemplatePane.setBackground(new Color(0, 0, 0, 0));
+		resultTemplatePane.setBounds(-10, -10, WINDOW_WIDTH+20, WINDOW_HEIGHT+10);
+		resultTemplatePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+		JScrollBar verticalScrollbar = new JScrollBar(JScrollBar.VERTICAL);
+    verticalScrollbar.setUnitIncrement(50);
+		resultTemplatePane.setVerticalScrollBar(verticalScrollbar);
+		
+		add(resultTemplatePane, Integer.valueOf(0));
+		repaint();
 	}
 
 	private void readTagFile(){
@@ -204,7 +282,7 @@ public class SearchPage extends Page{
 			while ((s = reader.readLine()) != null){
 				if (!s.equals("")){
 					String[] sSplit = s.split(" ");
-					templateTag.add(sSplit);
+					templateTagList.add(sSplit);
 					for (int i = 1; i < sSplit.length; i++) tagSet.add(sSplit[i]);
 				}
 			}

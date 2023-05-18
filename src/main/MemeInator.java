@@ -15,13 +15,14 @@ import main.page.*;
 import main.external.NewFont;
 
 public class MemeInator extends JFrame{
-  private final String VERSION = "v0.dev-30";
+  private final String VERSION = "v0.dev-34";
   private final int WINDOW_WIDTH = 1080;
   private final int WINDOW_HEIGHT = 720;
   private final Color APP_BG_COLOR = new Color(40, 40, 40);
   private final Color APP_COLOR1 = new Color(255, 255, 255);
   private NewFont newFont;
   private JPanel app;
+  private EditorPage editorPage;
   
   public MemeInator(){
     super("迷因產生器");
@@ -55,7 +56,7 @@ public class MemeInator extends JFrame{
     app = new JPanel(new CardLayout());
     app.add(new StartPage(this), "StartPage");
     app.add(new SearchPage(this), "SearchPage");
-    app.add(new EditorPage(this), "EditorPage");
+    app.add(editorPage = new EditorPage(this), "EditorPage");
 
     setContentPane(app);
     setLocationByPlatform(true);
@@ -69,4 +70,5 @@ public class MemeInator extends JFrame{
   public Color getAppColor1(){return APP_COLOR1;}
   public Font getF(){return newFont.getF();}
   public JPanel getApp(){return app;}
+  public EditorPage getEditorPage(){return editorPage;}
 }
