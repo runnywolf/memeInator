@@ -1,0 +1,3 @@
+C:\Users\runnywolf\Documents\GitHub\memeInator\src\main\external\ChooseFolder.java
+C:\Users\runnywolf\Documents\GitHub\memeInator\src\main\external\ImgurImageUploadTest.java
+C:\Users\runnywolf\Documents\GitHub\memeInator\src\main\external\NewFont.java

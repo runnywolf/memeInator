@@ -145,6 +145,10 @@ public class Template{
     page.canvasClickObject(newObject);
   }
 
+  public void deleteObject(TemplateObject obj){
+    objList.remove(obj);
+  }
+
   public int getWidth(){return width;}
   public int getHeight(){return height;}
 }

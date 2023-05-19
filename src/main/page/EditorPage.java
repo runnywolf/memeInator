@@ -60,8 +60,9 @@ public class EditorPage extends Page{
       {
         new DefaultButton(this, "預設選取模式", "img/toolbarIcon/default.png"),
         new SetCanvasSizeButton(this, "設定畫布範圍", "img/toolbarIcon/setCanvasSize.png"),
-        addImageButton,
-        addTextBoxButton
+        addImageButton = new AddImageButton(this, "新增圖片", "img/toolbarIcon/addImage.png"),
+        addTextBoxButton = new AddTextBoxButton(this, "新增文字方塊", "img/toolbarIcon/addTextBox.png"),
+        new DeleteButton(this, "刪除目前選取的物件", "img/toolbarIcon/delete.png")
       }
     }; // 按鈕排版
     buttonGroups = groups;
@@ -146,13 +147,13 @@ public class EditorPage extends Page{
     panel.addMouseListener(new MouseAdapter(){
       @Override
       public void mousePressed(MouseEvent me){
-        if (objectSelected == null) return;
-
         mousePressX = me.getX();
         mousePressY = me.getY();
+        
         switch (paramBarCurrentPage){
           case "default": case "addImage": case "addTextBox":
             canvasClickObject(template.whichObjectClicked(me.getX()-canvasX, me.getY()-canvasY));
+            if (objectSelected == null) return;
             lastX = objectSelected.x;
             lastY = objectSelected.y;
             break;
@@ -166,13 +167,12 @@ public class EditorPage extends Page{
     panel.addMouseMotionListener(new MouseMotionAdapter(){
       @Override
       public void mouseDragged(MouseEvent me){
-        if (objectSelected == null) return;
-
         int moveX = me.getX()-mousePressX;
         int moveY = me.getY()-mousePressY;
 
         switch (paramBarCurrentPage){
           case "default": case "addImage": case "addTextBox":
+            if (objectSelected == null) return;
             objectSelected.setRect(lastX+moveX, lastY+moveY, objectSelected.w, objectSelected.h);
             dragBorder.setButtonLocation(canvasX+lastX+moveX, canvasY+lastY+moveY, objectSelected.w, objectSelected.h);
             break;
@@ -208,7 +208,7 @@ public class EditorPage extends Page{
     dragBorder.setVisible(true);
   }
 
-  private void redrawTemplate(){
+  public void redrawTemplate(){
     if (templateLayer != null) remove(templateLayer);
     add(templateLayer = template.getTemplateLayer(10+canvasX, TOOLBAR_HEIGHT+canvasY), Integer.valueOf(1));
     redrawCanvasCover(canvasX, canvasY, canvasWidth, canvasHeight);
@@ -392,6 +392,7 @@ public class EditorPage extends Page{
   public void setDefaultButtonClick(){
     if (dragBorder == null) return;
 
+    objectSelected = null;
     setBarPage("default");
     dragBorder.setVisible(false);
   }
